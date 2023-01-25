@@ -51,12 +51,10 @@ function ProductDetailsPage (props) {
         <button>Edit Product</button>
       </Link>  
 
-
       <div>
-      <Link >
-        <button>Order Now</button>
-      </Link> 
-
+        <Link to={`/orders/${productId}`}>
+          <button>Order Now</button>
+        </Link>
       </div>   
 
       </div>
