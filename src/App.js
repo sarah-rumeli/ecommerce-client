@@ -28,7 +28,7 @@ function App() {
 
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/:productId" element={<ProductDetailsPage />} />
-        <Route path="/product/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
+        <Route path="/products/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
       </Routes>
 
 
