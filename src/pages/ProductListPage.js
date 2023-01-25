@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { useContext } from "react";                     
+import { AuthContext } from "../context/auth.context";
 
 import AddProduct from "../components/AddProduct";
 
 //const API_URL = "http://localhost:5005";
 
 function ProductListPage() {
+
+  const { isLoggedIn, user,logOutUser} = useContext(AuthContext); 
+
+
     const [products, setProducts] = useState([]);
    
     const getAllProducts = () => {
@@ -24,7 +29,14 @@ function ProductListPage() {
         <div className="ProductListPage">
 
         <div>
-        <AddProduct refreshProducts={getAllProducts} />
+
+
+        {isLoggedIn && (
+          <AddProduct refreshProducts={getAllProducts} />
+        )}
+
+
+        
 
         </div>
           
