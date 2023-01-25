@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+
+import AddProduct from "../components/AddProduct";
+
 //const API_URL = "http://localhost:5005";
 
 function ProductListPage() {
@@ -19,6 +22,11 @@ function ProductListPage() {
 
       return (
         <div className="ProductListPage">
+
+        <div>
+        <AddProduct refreshProducts={getAllProducts} />
+
+        </div>
           
             {products.map((product) => {
               return (
