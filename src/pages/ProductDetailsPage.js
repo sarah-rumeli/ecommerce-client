@@ -36,7 +36,8 @@ function ProductDetailsPage (props) {
             <p> Description:{product.description}</p>
             <p>Price :{product.price}</p>
             <p>Category:{product.category}</p>
-            <p>Image:{product.img}</p>
+            <p>Image: <img src=
+            {product.img} alt ="Product" /></p>
           </>
         )}
    
@@ -48,7 +49,15 @@ function ProductDetailsPage (props) {
 
         <Link to={`/products/edit/${productId}`}>
         <button>Edit Product</button>
-      </Link>     
+      </Link>  
+
+
+      <div>
+      <Link >
+        <button>Order Now</button>
+      </Link> 
+
+      </div>   
 
       </div>
     );
