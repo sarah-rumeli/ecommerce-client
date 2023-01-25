@@ -10,8 +10,10 @@ import LoginPage from "./pages/LoginPage";
 
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import EditProductPage from './pages/EditProductPage';
 
 import IsAnon from './components/IsAnon';
+import IsPrivate from "./components/IsPrivate";
 
 function App() {
   return (
@@ -25,7 +27,8 @@ function App() {
         <Route path="/login" element={ <LoginPage /> } />
 
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/:productId" element={<ProductDetailsPage />} /> 
+        <Route path="/products/:productId" element={<ProductDetailsPage />} />
+        <Route path="/product/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
       </Routes>
 
 
