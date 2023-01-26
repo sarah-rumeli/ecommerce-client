@@ -15,6 +15,7 @@ import EditProductPage from './pages/EditProductPage';
 
 import IsAnon from './components/IsAnon';
 import IsPrivate from "./components/IsPrivate";
+import AddOrder from './components/AddOrder';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/:productId" element={<ProductDetailsPage />} />
         <Route path="/products/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
+        <Route path="/orders/:productId" element={<IsPrivate> <AddOrder /> </IsPrivate>} />
       </Routes>
 
 

@@ -1,107 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
- 
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+
 const API_URL = "http://localhost:5005";
 
-function AddProduct(props) {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
-    const [category, setCategory] = useState("");
-    const [img, setImg] = useState("");
+function AddOrder(props) {
+  const {user} = useContext(AuthContext);
 
+  const [userId , setUserId] = useState(user._id);
+  const [notes, setNotes] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [status, setStatus] = useState("inCart");
+  const [orderDate, setOrderDate] = useState(new Date());
+  const {productId} = useParams();
+  console.log(productId);
+  //const {userId} = user._id;
+  console.log('userId: ', userId);
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`, { headers: {Authorization: `Bearer ${storedToken}`} })
+      .then((response) => {
+          const oneProduct = response.data;
+          setName(oneProduct.name);
+          setPrice(oneProduct.price.toFixed(2));
+      })
+      .catch((error) => console.log("There has been error retrieving Product Details: ", error));
+  }, [productId]);
 
-    const handleSubmit = (e) => {                          // <== ADD
-        e.preventDefault();
-     
-        const requestBody = { name,description,price,category,img };
-console.log(requestBody);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { userId, products:{productId, name}, totalPrice:price, notes, status, orderDate };
+    console.log(requestBody);
+    const storedToken = localStorage.getItem('authToken');
 
-        axios
-          .post(`${API_URL}/api/products`, requestBody)
-          .then((response) => {
-            // Reset the state
-            setName("");
-            setDescription("");
-            setPrice(0);
-            setCategory("Organic Products");
-            setImg("")
+    axios
+      .post(`${API_URL}/api/orders`, requestBody, { headers: {Authorization: `Bearer ${storedToken}`} })
+      .then((response) => {
+        // Reset the state
+        setUserId("");
+        setNotes("");
+        setName("");
+        setPrice("");
+        setStatus("");
+        setOrderDate("");
 
-            props.refreshProducts(); 
+        //props.refreshOrder();
+      })
+      .catch((error) => console.log(error));
+  };
 
-
-          })
-          .catch((error) => console.log(error));
-      };
-     
-
-
-
-
-
-
-
-
-
-
-    return (
-        <div className="AddProduct">
-          <h3>Add Product</h3>
-          <form onSubmit={handleSubmit}>
-        <label>Name *:</label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
- 
-        <label>Description *:</label>
+  return (
+    <div className="AddOrder">
+      <h3>Place Order</h3>
+      <div className="AddOrderShowProducts">
+        <div>Product details:</div>
+        <div>{name} - € {price}</div>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <label>Notes :</label>
         <textarea
           type="text"
-          name="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
         />
 
-        <label>Price *:</label>
-        <input
-          type="number"
-          name="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-
-        <label>Category *:
-        <select
-         name="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-        <option value="">Select a category</option>
-          <option value="Organic Products">Organic Products</option>
-          <option value="Reclaimed Textiles">Reclaimed Textiles</option>
-          <option value="Refurbished Electronics">Refurbished Electronics</option>
-          <option value="Water Conservation">Water Conservation</option>
-          <option value="Eco Fertilizers">Eco Fertilizers</option>
-        </select>
-      </label>
-
-      <label>Image:</label>
-        <input
-          type="text"
-          name="img"
-          value={img}
-          onChange={(e) => setImg(e.target.value)}
-        />
- 
-
-
-<button type="submit">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
- 
-export default AddProduct;
+
+export default AddOrder;
