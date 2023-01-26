@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage"; 
 import UserProfile from './pages/UserProfile';
+import EditProfile from './pages/EditProfile';
 
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
@@ -28,12 +29,16 @@ function App() {
         <Route path="/signup" element={ <SignupPage /> } /> 
         <Route path="/login" element={ <LoginPage /> } />
         <Route path="/profile" element={ <UserProfile /> } />
-        
+        <Route path="/profile/edit/:profileId" element={<EditProfile /> } />
+        <Route path="/profile/delete/:profileId" element={<EditProfile /> } />
 
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/:productId" element={<ProductDetailsPage />} />
         <Route path="/products/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
         <Route path="/orders/:productId" element={<IsPrivate> <AddOrder /> </IsPrivate>} />
+
+       
+
       </Routes>
 
 

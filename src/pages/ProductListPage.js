@@ -43,8 +43,11 @@ function ProductListPage() {
             {products.map((product) => {
               return (
                 <div className="ProductCard card" key={product._id} >
+                <h3>{product.name}</h3>
+
+
                   <Link to={`/products/${product._id}`}>
-                    <h3>{product.name}</h3>
+                    <button>More Details</button>
                   </Link>
                 </div>
               );

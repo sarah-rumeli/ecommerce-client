@@ -9,29 +9,29 @@ const API_URL = "http://localhost:5005";
 function UserProfile() {
   const { isLoggedIn, isLoading, user, authenticateUser } =
     useContext(AuthContext);
-  // const [profile, setProfile] = useState(user);
+   const [profile, setProfile] = useState(user);
 
-  // console.log("User obj", user);
+   console.log("User obj", user);
   // console.log(isLoggedIn);
-  // const getCurrentUser = () => {
-  //   const storedToken = localStorage.getItem("authToken");
+   const getCurrentUser = () => {
+    const storedToken = localStorage.getItem("authToken");
   //   console.log("stored token", storedToken);
 
-  //   if (isLoggedIn) {
-  //     axios
-  //       .get(`${API_URL}/auth/profile/${profile._id}`, {
-  //         headers: { Authorization: `Bearer ${storedToken}` },
-  //       })
-  //       .then((response) => {
-  //         const oneProfile = response.data;
-  //         setProfile(oneProfile);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }
-  // };
-  // useEffect(() => {
-  //   getCurrentUser();
-  // }, []);
+    if (isLoggedIn) {
+     axios
+        .get(`${API_URL}/auth/profile/${profile._id}`, {
+       headers: { Authorization: `Bearer ${storedToken}` },
+         })
+       .then((response) => {
+         const oneProfile = response.data;
+        setProfile(oneProfile);
+        })
+         .catch((error) => console.log(error));
+     }
+   };
+   useEffect(() => {
+  getCurrentUser();
+  }, []);
 
   return (
     <>
@@ -39,8 +39,12 @@ function UserProfile() {
         <p> Loading....</p>
       ) : (
         <div className="profileDetails">
-          {" "}
-          <h4> {user.name}</h4> <h5>{user.email}</h5>{" "}
+          
+          <h4> {profile.name}</h4>
+           <h5> Email: {profile.email}</h5>
+           <h5> Address:{profile.address}</h5>
+           <Link to={`/profile/edit/${profile._id}`}>Edit Profile</Link>
+           <Link to = "">Delete Profile</Link>
         </div>
       )}
     </>
