@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
 
@@ -10,12 +11,15 @@ function AddProduct(props) {
   const [category, setCategory] = useState("Organic Products");
   const [img, setImg] = useState("");
 
+  const { isLoggedIn, isLoading, user, authenticateUser } =
+    useContext(AuthContext);
+
   const handleSubmit = (e) => {
     // <== ADD
     e.preventDefault();
 
     const storedToken = localStorage.getItem('authToken');
-    const requestBody = { name, description, price, category, img };
+    const requestBody = { name, description, price, category, img,user:user._id };
     console.log(requestBody);
 
     axios

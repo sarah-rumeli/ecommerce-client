@@ -24,7 +24,9 @@ return(
           <>
           <button onClick={logOutUser}>Logout</button>
           <span>{user &&"Hello," +user.name}</span>
+          <Link to="/profile"> <button>My Profile</button> </Link>
           </>
+
         )}
               
          

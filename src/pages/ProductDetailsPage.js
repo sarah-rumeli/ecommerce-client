@@ -34,6 +34,10 @@ function ProductDetailsPage (props) {
           <>
             <h1>{product.name}</h1>
             <p> Description:{product.description}</p>
+            <p> Created by:
+            <span>{product.user.name}</span><br></br>
+            <span>{product.user.email}</span>
+            </p>
             <p>Price :{product.price}</p>
             <p>Category:{product.category}</p>
             <p>Image: <img src=
@@ -56,6 +60,12 @@ function ProductDetailsPage (props) {
           <button>Order Now</button>
         </Link>
       </div>   
+
+      <div>
+        <Link to={"/cart"}>
+          <button>Add to Cart</button>
+        </Link>
+      </div> 
 
       </div>
     );
