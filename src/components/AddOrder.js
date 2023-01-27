@@ -13,7 +13,7 @@ function AddOrder(props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("inCart");
-  const [orderDate, setOrderDate] = useState(new Date());
+ // const [orderDate, setOrderDate] = useState(new Date());
   const {productId} = useParams();
   console.log(productId);
   //const {userId} = user._id;
@@ -33,7 +33,7 @@ function AddOrder(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { userId, products:{productId, name}, totalPrice:price, notes, status, orderDate };
+    const requestBody = { userId, products:{productId, name}, totalPrice:price, notes, status };
     console.log(requestBody);
     const storedToken = localStorage.getItem('authToken');
 
@@ -46,7 +46,7 @@ function AddOrder(props) {
         setName("");
         setPrice("");
         setStatus("");
-        setOrderDate("");
+       
 
         //props.refreshOrder();
       })

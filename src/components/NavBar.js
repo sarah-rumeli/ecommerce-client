@@ -20,21 +20,25 @@ function Navbar() {
           <button onClick={logOutUser}>Logout</button>
           <span>{user && "Hello," + user.name}</span>
           <Link to="/profile">
-            {" "}
-            <button>My Profile</button>{" "}
+            
+            <button>My Profile</button>
           </Link>
+
+
+<Link to="/orders"><button>Orders List</button></Link>
+
         </>
       )}
 
       {!isLoggedIn && (
         <>
           <Link to="/signup">
-            {" "}
-            <button>Sign Up</button>{" "}
+           
+            <button>Sign Up</button>
           </Link>
           <Link to="/login">
-            {" "}
-            <button>Login</button>{" "}
+           
+            <button>Login</button>
           </Link>
         </>
       )}

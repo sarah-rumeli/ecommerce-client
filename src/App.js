@@ -13,6 +13,7 @@ import EditProfile from './pages/EditProfile';
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import EditProductPage from './pages/EditProductPage';
+import DisplayOrders from './components/DisplayOrders';
 
 import IsAnon from './components/IsAnon';
 import IsPrivate from "./components/IsPrivate";
@@ -36,6 +37,8 @@ function App() {
         <Route path="/products/:productId" element={<ProductDetailsPage />} />
         <Route path="/products/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
         <Route path="/orders/:productId" element={<IsPrivate> <AddOrder /> </IsPrivate>} />
+
+        <Route path="/orders" element={<DisplayOrders />} />
 
        
 
