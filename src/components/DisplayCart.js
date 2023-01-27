@@ -11,7 +11,7 @@ function DisplayCart() {
 
   const getCart = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/cart`)
+      .get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`)
       .then((response) => setCart(response.data))
       .catch((error) => console.log(error));
   };

@@ -8,6 +8,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import UserProfile from "./pages/UserProfile";
 import EditProfile from "./pages/EditProfile";
+import DisplayCart from "./components/DisplayCart";
 
 
 import EditOrderPage from './pages/EditOrderPage';
@@ -46,7 +47,8 @@ function App() {
        
         <Route path="/orders" element={<DisplayOrderPage />} />
         <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />
-       
+
+        <Route path="/cart" element={<DisplayCart />} />
 
         
       </Routes>

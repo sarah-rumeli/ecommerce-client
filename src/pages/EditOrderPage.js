@@ -28,7 +28,7 @@ function EditOrderPage (){
         console.log("response is .....",response.data)
         const oneOrder = response.data;
         setStatus(oneOrder.status);
-        //setDispatchDate(oneOrder.dispatchDate);
+        setDispatchDate(oneOrder.dispatchDate);
        
     })
     .catch((error) => console.log("There has been error retrieving Product Details: ", error));
@@ -36,7 +36,7 @@ function EditOrderPage (){
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    const requestBody = {status};
+    const requestBody = {status,dispatchDate};
     const storedToken = localStorage.getItem('authToken');
 
     axios
@@ -58,7 +58,10 @@ const handleSubmit = (e) => {
           value={status}
           onChange={(e) => setStatus(e.target.value)}
         />
- 
+        <label>
+        Dispatch Date: </label>
+        <input type="date" name ="dispatchDate" value={dispatchDate}  onChange={(e) => setDispatchDate(e.target.value)} />
+     
         
       <button type="submit">Submit</button>
       </form>
