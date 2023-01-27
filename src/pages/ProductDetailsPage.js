@@ -13,21 +13,30 @@ function ProductDetailsPage(props) {
   const { productId } = useParams();
 
   const getProduct = () => {
-    //  <== ADD A NEW FUNCTION
     axios
       .get(`${API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
-
         setProduct(oneProduct);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    // <== ADD AN EFFECT
     getProduct();
   }, []);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = {user: user._id, product}
+    axios
+      .post(`${API_URL}/api/cart`, requestBody)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+    
+  }
 
   return (
     <>
@@ -67,7 +76,7 @@ function ProductDetailsPage(props) {
                 </div>
 
                 <div>
-                  <Link to={"/cart"}>
+                  <Link onClick={handleSubmit}>
                     <button>Add to Cart</button>
                   </Link>
                 </div>
