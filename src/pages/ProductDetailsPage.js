@@ -13,21 +13,30 @@ function ProductDetailsPage(props) {
   const { productId } = useParams();
 
   const getProduct = () => {
-    //  <== ADD A NEW FUNCTION
     axios
       .get(`${API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
-
         setProduct(oneProduct);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    // <== ADD AN EFFECT
     getProduct();
   }, []);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = {user: user._id, product}
+    axios
+      .post(`${API_URL}/api/cart`, requestBody)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+    
+  }
 
   return (
     <>
@@ -50,38 +59,35 @@ function ProductDetailsPage(props) {
               Image: <img src={product.img} alt="Product" />
             </p>
 
-           
-{isLoggedIn && (<>
-  {user._id === product.user._id && (
+            {isLoggedIn && (
               <>
-                <Link to={`/products/edit/${productId}`}>
-                  <button>Edit Product</button>
-                </Link>
+                {user._id === product.user._id && (
+                  <>
+                    <Link to={`/products/edit/${productId}`}>
+                      <button>Edit Product</button>
+                    </Link>
+                  </>
+                )}
+
+                <div>
+                  <Link to={`/orders/${productId}`}>
+                    <button>Order Now</button>
+                  </Link>
+                </div>
+
+                <div>
+                  <Link onClick={handleSubmit}>
+                    <button>Add to Cart</button>
+                  </Link>
+                </div>
               </>
             )}
-
-            
-        <div>
-          <Link to={`/orders/${productId}`}>
-            <button>Order Now</button>
-          </Link>
-        </div>
-
-        <div>
-          <Link to={"/cart"}>
-            <button>Add to Cart</button>
-          </Link>
-        </div>
-
-</>)}
-            
           </>
         )}
 
         <Link to="/products">
           <button>Back to products</button>
         </Link>
-
       </div>
     </>
   );
