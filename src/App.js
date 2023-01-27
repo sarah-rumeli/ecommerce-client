@@ -13,11 +13,14 @@ import EditProfile from './pages/EditProfile';
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import EditProductPage from './pages/EditProductPage';
-import DisplayOrders from './components/DisplayOrders';
+import EditOrderPage from './pages/EditOrderPage';
+
 
 import IsAnon from './components/IsAnon';
 import IsPrivate from "./components/IsPrivate";
 import AddOrder from './components/AddOrder';
+import DisplayOrderPage from './components/DisplayOrderPage ';
+import SpecificOrder from './components/SpecificOrder';
 
 function App() {
   return (
@@ -38,8 +41,9 @@ function App() {
         <Route path="/products/edit/:productId" element={<IsPrivate> <EditProductPage /> </IsPrivate>} />
         <Route path="/orders/:productId" element={<IsPrivate> <AddOrder /> </IsPrivate>} />
 
-        <Route path="/orders" element={<DisplayOrders />} />
-
+       
+        <Route path="/orders" element={<DisplayOrderPage />} />
+        <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />
        
 
       </Routes>

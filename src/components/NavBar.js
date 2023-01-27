@@ -46,6 +46,10 @@ function Navbar() {
       <>
       <Link to="/cart">Cart</Link>
       </>
+
+      
+
+
     </nav>
   );
 }

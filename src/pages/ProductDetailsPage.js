@@ -50,38 +50,35 @@ function ProductDetailsPage(props) {
               Image: <img src={product.img} alt="Product" />
             </p>
 
-           
-{isLoggedIn && (<>
-  {user._id === product.user._id && (
+            {isLoggedIn && (
               <>
-                <Link to={`/products/edit/${productId}`}>
-                  <button>Edit Product</button>
-                </Link>
+                {user._id === product.user._id && (
+                  <>
+                    <Link to={`/products/edit/${productId}`}>
+                      <button>Edit Product</button>
+                    </Link>
+                  </>
+                )}
+
+                <div>
+                  <Link to={`/orders/${productId}`}>
+                    <button>Order Now</button>
+                  </Link>
+                </div>
+
+                <div>
+                  <Link to={"/cart"}>
+                    <button>Add to Cart</button>
+                  </Link>
+                </div>
               </>
             )}
-
-            
-        <div>
-          <Link to={`/orders/${productId}`}>
-            <button>Order Now</button>
-          </Link>
-        </div>
-
-        <div>
-          <Link to={"/cart"}>
-            <button>Add to Cart</button>
-          </Link>
-        </div>
-
-</>)}
-            
           </>
         )}
 
         <Link to="/products">
           <button>Back to products</button>
         </Link>
-
       </div>
     </>
   );

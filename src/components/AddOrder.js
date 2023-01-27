@@ -12,7 +12,7 @@ function AddOrder(props) {
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [status, setStatus] = useState("inCart");
+  const [status, setStatus] = useState("Awaiting Payment");
  // const [orderDate, setOrderDate] = useState(new Date());
   const {productId} = useParams();
   console.log(productId);
