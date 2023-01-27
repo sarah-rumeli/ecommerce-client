@@ -5,10 +5,12 @@ import { useNavigate,Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
+
 function DisplayOrderPage() {
   const { isLoggedIn, user, logOutUser,isLoading } = useContext(AuthContext);
 
   const [orders, setOrders] = useState([]);
+  const [message, setMessage] = useState(undefined); 
   const navigate = useNavigate();
 
   const getAllOrders = () => {
@@ -35,11 +37,35 @@ function DisplayOrderPage() {
   useEffect(() => {
     getAllOrders();
   }, []);
+  const deleteOrder = (orderId) => {
+    const storedToken = localStorage.getItem('authToken');
 
+    axios
+    .delete(`${process.env.REACT_APP_API_URL}/api/orders/${orderId}`, { headers: {Authorization: `Bearer ${storedToken}`} })
+    .then((response) => {
+      const message = response.data.message;
+      setMessage(message);
+        getAllOrders();
+      
+    })
+    .catch((error) => console.log("There has been error deleting this Product: ", error));
+  }
+  const renderDetails = () => {
+return(
+  <div>
+    <h2>You haven't placed an order with us yet! Go Shopping!</h2>
+    <Link to="/products">To Products</Link>
+
+  </div>
+)
+
+  }
   return (
     <>
     {!isLoading &&
     <div className="OrderListPage">
+    {message && <p className="message">{message}</p>}
+    {orders.length===0 && renderDetails()}
       <div>{console.log(orders)}</div>
 
       {orders.map((order) => {
@@ -77,9 +103,9 @@ function DisplayOrderPage() {
                 {order.status !== "Delivered" ? (
                   order.status !== "Dispatched" ? (
                     <>
-                    <Link to={`/orders/delete/${order._id}`}>
-                        <button>DeleteOrder</button>
-                      </Link>
+                    
+                    <button onClick={() => deleteOrder(order._id)}>Delete Order </button>
+ 
                     </>
                   ) : (
                     " Expect to receive soon"
@@ -94,9 +120,9 @@ function DisplayOrderPage() {
               <>
                 {order.status === "Awaiting Payment" ? (
                   <>
-                  <Link to={`/orders/delete/${order._id}`}>
-                      <button>Delete Order</button>
-                    </Link>
+                 
+                  <button onClick={() => deleteOrder(order._id)}>Cancel Order </button>
+                   
                   </>
                 ) : (
                   " Expect to receive soon"
