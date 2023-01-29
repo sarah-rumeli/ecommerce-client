@@ -36,7 +36,9 @@ function UserProfile() {
   return (
     <>
       {isLoading ? (
-        <p> Loading....</p>
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
       ) : (
         <div className="profileDetails">
           <h4> {user.name}</h4>

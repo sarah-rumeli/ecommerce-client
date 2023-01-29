@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { CartContext } from "../context/cart.context";
 
@@ -13,6 +13,7 @@ function ProductDetailsPage(props) {
   const { isLoggedIn, isLoading, user, logOutUser } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const { addToCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const { productId } = useParams();
 
@@ -41,9 +42,14 @@ function ProductDetailsPage(props) {
     axios
       .post(`${API_URL}/api/cart`, requestBody)
       .then((response) => {
-        console.log(response);
+        console.log("response: ", response);
         // update the cartItems state in the component
-        addToCart(product);
+        const {cart} = response.data;
+        console.log("PRODUCT DETAILS: {cart}", cart);
+        addToCart(cart);
+        // Once the request is resolved successfully and the item
+        // has been added to the cart we navigate back here
+        navigate(`/products/${product._id}`);
       })
       .catch((error) => console.log(error));
   }

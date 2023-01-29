@@ -1,4 +1,4 @@
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
@@ -14,39 +14,42 @@ function AddProduct(props) {
   const { isLoggedIn, isLoading, user, authenticateUser } =
     useContext(AuthContext);
 
-///////////////////////upload image ///////////////////////
-      const handleFileUpload = (e) => {
-     
-      const file = e.target.files[0];
-      const uploadData = new FormData();
-      uploadData.append("img",file);      
-    
-   
-      axios.post(`${API_URL}/api/products/upload`,uploadData)       
-        .then(response => {
-            //console.log("response is: ", response.data.fileUrl);
-            // response carries "fileUrl" which we can use to update the state
-
-            setImg(response.data.fileUrl);
-          
-        })
-        .catch(err => console.log("Error while uploading the file: ", err));
-    };
-    
-///////////////////////upload image ///////////////////////
-
-  const handleSubmit = (e) => {
-
-    
-
-    e.preventDefault();
-
-    const storedToken = localStorage.getItem('authToken');
-    const requestBody = { name, description, price, category, img,user:user._id };
-    
+  ///////////////////////upload image ///////////////////////
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append("img", file);
 
     axios
-      .post(`${API_URL}/api/products`, requestBody, { headers: {Authorization: `Bearer ${storedToken}`} })
+      .post(`${API_URL}/api/products/upload`, uploadData)
+      .then((response) => {
+        //console.log("response is: ", response.data.fileUrl);
+        // response carries "fileUrl" which we can use to update the state
+
+        setImg(response.data.fileUrl);
+      })
+      .catch((err) => console.log("Error while uploading the file: ", err));
+  };
+
+  ///////////////////////upload image ///////////////////////
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const storedToken = localStorage.getItem("authToken");
+    const requestBody = {
+      name,
+      description,
+      price,
+      category,
+      img,
+      user: user._id,
+    };
+
+    axios
+      .post(`${API_URL}/api/products`, requestBody, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
       .then((response) => {
         // Reset the state
         setName("");
@@ -61,57 +64,70 @@ function AddProduct(props) {
   };
 
   return (
-           <div className="AddProduct">
-            <h3>Add Product</h3>
-            <form onSubmit={handleSubmit}>
-
-            <label>Name *:</label>
-                <input
-                 type="text"
-                 name="name"
-                 value={name}
-                 onChange={(e) => setName(e.target.value)}
-                />
-
-            <label>Description *:</label>
-               <textarea
-               type="text"
-               name="description"
-               value={description}
-               onChange={(e) => setDescription(e.target.value)}
-            />
-
-           <label>Price *:</label>
+    <div className="container-fluid mb-5 mt-4">
+      <div className="row justify-content-center">
+        <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
+          <h3>Add a Product</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Name *:</label>
               <input
-              type="number"
-              name="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-
-           <label>
-              Category *:
-                  <select
-                     name="category"
-                     value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                  >
-                       <option value="">Select a category</option>
-                       <option value="Organic Products">Organic Products</option>
-                       <option value="Reclaimed Textiles">Reclaimed Textiles</option>
-                       <option value="Refurbished Electronics">Refurbished Electronics</option>
-                       <option value="Water Conservation">Water Conservation</option>
-                       <option value="Eco Fertilizers">Eco Fertilizers</option>
-                 </select>
-           </label>
-
-          <label>Image:</label>
-        
-        <input type="file"  name="file"
-            onChange={(e) => handleFileUpload(e)} />
-
-        <button type="submit">Submit</button>
-      </form>
+                className="form-control"
+                type="text"
+                name="name"
+                value={name}
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Description *:</label>
+              <textarea
+                className="form-control"
+                type="text"
+                name="description"
+                value={description}
+                required 
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Price *:</label>
+              <input
+                className="form-control"
+                type="number"
+                name="price"
+                min="1"
+                max="10000"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+            <label className="form-label">Category *:</label>
+              <select
+                className="form-control"
+                name="category"
+                value={category}
+                required
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Select a category</option>
+                <option value="Organic Products">Organic Products</option>
+                <option value="Reclaimed Textiles">Reclaimed Textiles</option>
+                <option value="Refurbished Electronics">Refurbished Electronics</option>
+                <option value="Water Conservation">Water Conservation</option>
+                <option value="Eco Fertilizers">Eco Fertilizers</option>
+              </select>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Image:</label>
+              <input className="form-control" type="file" name="file" onChange={(e) => handleFileUpload(e)} />
+            </div>
+            <button className="btn bg-success bg-gradient text-light" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

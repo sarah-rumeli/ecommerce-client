@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 //const API_URL = "http://localhost:5005";
 
+console.log("********* EditProfile.js ***************");
 function EditProfile(props) {
   const {
     isLoggedIn,

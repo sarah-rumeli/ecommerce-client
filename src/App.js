@@ -26,6 +26,8 @@ import AddOrder from './components/AddOrder';
 import CartPage from "./components/CartPage";
 import { CartProviderWrapper } from "./context/cart.context";
 
+import Footer from "./components/Footer";
+
 function App() {
   return (
     <div className="App">
@@ -50,6 +52,8 @@ function App() {
           <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />*/}
           <Route path="/cart" element={<CartPage />} />
         </Routes>
+
+        <Footer />
       </CartProviderWrapper>
     </div>
   );

@@ -7,7 +7,10 @@ function IsAnon( { children } ) {
   const { isLoggedIn, isLoading } = useContext(AuthContext);
  
   // If the authentication is still loading 
-  if (isLoading) return <p>Loading ...</p>;
+  if (isLoading) return 
+  <div className="spinner-border text-success" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>;
  
   if (isLoggedIn) {
     // If the user is logged in, navigate to the home page     
