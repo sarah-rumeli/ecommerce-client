@@ -18,27 +18,32 @@ import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
 import AddOrder from "./components/AddOrder";
 
+import { CartProviderWrapper } from "./context/cart.context";
+
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      <CartProviderWrapper>
+        <NavBar />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
 
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/profile/edit/:profileId" element={<EditProfile />} />
-        <Route path="/profile/delete/:profileId" element={<EditProfile />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile/edit/:profileId" element={<EditProfile />} />
+          <Route path="/profile/delete/:profileId" element={<EditProfile />} />
 
-        <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/:productId" element={<ProductDetailsPage />} />
-        <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
-        <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
+          <Route path="/products" element={<ProductListPage />} />
+          <Route path="/products/:productId" element={<ProductDetailsPage />} />
+          <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
+          
+          <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
+          <Route path="/orders" element={<DisplayOrders />} />
 
-        <Route path="/orders" element={<DisplayOrders />} />
-      </Routes>
+        </Routes>
+      </CartProviderWrapper>
     </div>
   );
 }

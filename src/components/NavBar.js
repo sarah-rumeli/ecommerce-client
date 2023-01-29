@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
+import { CartContext } from "../context/cart.context";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+  const { cartItems } = useContext(CartContext);
 
   return (
     <nav>
@@ -44,7 +46,12 @@ function Navbar() {
       )}
 
       <>
-      <Link to="/cart">Cart</Link>
+      <Link className="cart-icon" to="/cart">
+        <img src='https://res.cloudinary.com/dq4j6xfee/image/upload/v1674855409/ecommerce/eo4ybyzrcpoyevhqurfj.png' />
+        {
+          cartItems.length > 0 ? <span className="cart-count">{ cartItems.length }</span> : null
+        }
+      </Link>
       </>
     </nav>
   );
