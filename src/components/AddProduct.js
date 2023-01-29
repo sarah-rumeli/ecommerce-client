@@ -10,27 +10,43 @@ function AddProduct(props) {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("Organic Products");
   const [img, setImg] = useState("");
+  const [imgIsLoading, setImgIsLoading] = useState(false);
+  const [uploadImg, setUploadImg] = useState("");//to hold form data object from user image upload
 
   const { isLoggedIn, isLoading, user, authenticateUser } =
     useContext(AuthContext);
 
   ///////////////////////upload image ///////////////////////
-  const handleFileUpload = (e) => {
+
+  const handleFileUpload = (e) => {  
     const file = e.target.files[0];
     const uploadData = new FormData();
     uploadData.append("img", file);
-
+    setUploadImg(uploadData);
+  };
+  const uploadImage = (uploadImg) => {
+    setImgIsLoading(true);
+    console.log("uploading.",uploadImg);
     axios
-      .post(`${API_URL}/api/products/upload`, uploadData)
+      .post(`${API_URL}/api/products/upload`, uploadImg)
       .then((response) => {
         //console.log("response is: ", response.data.fileUrl);
         // response carries "fileUrl" which we can use to update the state
-
-        setImg(response.data.fileUrl);
+        setImg(response.data.fileUrl);       
+        setImgIsLoading(false);
       })
       .catch((err) => console.log("Error while uploading the file: ", err));
+      
+    
   };
 
+  useEffect(() => {
+    
+    
+    uploadImage(uploadImg);
+    
+    
+  }, [uploadImg]);
   ///////////////////////upload image ///////////////////////
 
   const handleSubmit = (e) => {
@@ -124,7 +140,7 @@ function AddProduct(props) {
               <label className="form-label">Image:</label>
               <input className="form-control" type="file" name="file" onChange={(e) => handleFileUpload(e)} />
             </div>
-            <button className="btn bg-success bg-gradient text-light" type="submit">Submit</button>
+            <button className="btn bg-success bg-gradient text-light" type="submit" disabled={imgIsLoading}>Submit</button>
           </form>
         </div>
       </div>

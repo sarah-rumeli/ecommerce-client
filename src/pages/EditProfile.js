@@ -25,7 +25,8 @@ function EditProfile(props) {
   
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/profile/${profileId}`)
+      .get(`${process.env.REACT_APP_API_URL}/auth/profile/${profileId}`
+        )
       .then((response) => {
         const oneProfile = response.data;
         setName(oneProfile.name);
