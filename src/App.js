@@ -8,7 +8,6 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import UserProfile from "./pages/UserProfile";
 import EditProfile from "./pages/EditProfile";
-import DisplayCart from "./components/DisplayCart";
 
 
 import EditOrderPage from './pages/EditOrderPage';
@@ -21,7 +20,7 @@ import EditProductPage from "./pages/EditProductPage";
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
 import AddOrder from './components/AddOrder';
-import DisplayOrderPage from './components/DisplayOrderPage ';
+import DisplayOrderPage from './components/DisplayOrderPage';
 import SpecificOrder from './components/SpecificOrder';
 
 
@@ -42,13 +41,15 @@ function App() {
           <Route path="/profile/edit/:profileId" element={<EditProfile />} />
           <Route path="/profile/delete/:profileId" element={<EditProfile />} />
 
-        <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/:productId" element={<ProductDetailsPage />} />
-        <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
-        <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
+          <Route path="/products" element={<ProductListPage />} />
+          <Route path="/products/:productId" element={<ProductDetailsPage />} />
+          <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
+          <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
 
-        <Route path="/orders" element={<DisplayOrders />} />
-      </Routes>
+          <Route path="/orders" element={<DisplayOrderPage />} />
+          <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />
+        </Routes>
+      </CartProviderWrapper>
     </div>
   );
 }
