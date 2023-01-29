@@ -20,11 +20,13 @@ import EditProductPage from "./pages/EditProductPage";
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
 import AddOrder from './components/AddOrder';
+import DisplayOrderPage from './components/DisplayOrderPage';
 //import DisplayOrderPage from './components/DisplayOrderPage';
 //import SpecificOrder from './components/SpecificOrder';
 
 import CartPage from "./components/CartPage";
 import { CartProviderWrapper } from "./context/cart.context";
+import DisplayCart from "./components/DisplayCart";
 
 function App() {
   return (
@@ -37,7 +39,7 @@ function App() {
 
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<IsPrivate> {" "}<UserProfile />{" "} </IsPrivate>} />
           <Route path="/profile/edit/:profileId" element={<EditProfile />} />
           <Route path="/profile/delete/:profileId" element={<EditProfile />} />
 
@@ -46,11 +48,11 @@ function App() {
           <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
           <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
 
-          {/*<Route path="/orders" element={<DisplayOrderPage />} />
-          <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />*/}
+          <Route path="/orders" element={<IsPrivate> {" "} <DisplayOrderPage />{" "} </IsPrivate>} />
+          <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
-      </CartProviderWrapper>
+        </CartProviderWrapper>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const API_URL = "http://localhost:5005";
 console.log("*********** ProductDetailsPage *****************");
 
 function ProductDetailsPage(props) {
-  const { isLoggedIn, isLoading, user, logOutUser } = useContext(AuthContext);
+  const { isLoggedIn, isLoading, user, logOutUser,isAdmin } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const { addToCart } = useContext(CartContext);
 
@@ -70,6 +70,7 @@ function ProductDetailsPage(props) {
             </p>
 
             {isLoggedIn && (
+              
               <>
                 {user._id === product.user._id && (
                   <>
@@ -77,7 +78,16 @@ function ProductDetailsPage(props) {
                       <button>Edit Product</button>
                     </Link>
                   </>
-                )}
+                ) 
+                }
+                {user.isAdmin && (
+                  <>
+                    <Link to={`/products/edit/${productId}`}>
+                      <button>Edit Product</button>
+                    </Link>
+                  </>
+                ) 
+                }
 
                 <div>
                   <Link to={`/orders/${productId}`}>

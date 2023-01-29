@@ -14,8 +14,9 @@ function DisplayOrderPage() {
   const navigate = useNavigate();
 
   const getAllOrders = () => {
+    const storedToken = localStorage.getItem('authToken');
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/orders`)
+      .get(`${process.env.REACT_APP_API_URL}/api/orders`,{ headers: {Authorization: `Bearer ${storedToken}`} })
       .then((response) => {
         // variable that filters array
 
