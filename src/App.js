@@ -8,15 +8,22 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import UserProfile from "./pages/UserProfile";
 import EditProfile from "./pages/EditProfile";
+import DisplayCart from "./components/DisplayCart";
+
+
+import EditOrderPage from './pages/EditOrderPage';
 
 import ProductListPage from "./pages/ProductListPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import EditProductPage from "./pages/EditProductPage";
-import DisplayOrders from "./components/DisplayOrders";
+
 
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
-import AddOrder from "./components/AddOrder";
+import AddOrder from './components/AddOrder';
+import DisplayOrderPage from './components/DisplayOrderPage ';
+import SpecificOrder from './components/SpecificOrder';
+
 
 import { CartProviderWrapper } from "./context/cart.context";
 
@@ -35,15 +42,13 @@ function App() {
           <Route path="/profile/edit/:profileId" element={<EditProfile />} />
           <Route path="/profile/delete/:profileId" element={<EditProfile />} />
 
-          <Route path="/products" element={<ProductListPage />} />
-          <Route path="/products/:productId" element={<ProductDetailsPage />} />
-          <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
-          
-          <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
-          <Route path="/orders" element={<DisplayOrders />} />
+        <Route path="/products" element={<ProductListPage />} />
+        <Route path="/products/:productId" element={<ProductDetailsPage />} />
+        <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
+        <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
 
-        </Routes>
-      </CartProviderWrapper>
+        <Route path="/orders" element={<DisplayOrders />} />
+      </Routes>
     </div>
   );
 }

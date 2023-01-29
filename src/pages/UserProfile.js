@@ -42,6 +42,10 @@ function UserProfile() {
           <h4> {user.name}</h4>
           <h5> Email: {user.email}</h5>
           <h5> Address:{user.address}</h5>
+          <h5> Admin:{user.isAdmin===false?
+          (<h5>false</h5>):(<h5>true</h5>)
+          
+          }</h5>
           <Link to={`/profile/edit/${user._id}`}>Edit Profile</Link>
           <Link to="">Delete Profile</Link>
         </div>

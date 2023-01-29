@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
@@ -12,7 +12,8 @@ function AddOrder(props) {
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [status, setStatus] = useState("inCart");
+  const [status, setStatus] = useState("Awaiting Payment");
+  const [message, setMessage] = useState(undefined); 
  // const [orderDate, setOrderDate] = useState(new Date());
   const {productId} = useParams();
   console.log(productId);
@@ -40,6 +41,8 @@ function AddOrder(props) {
     axios
       .post(`${API_URL}/api/orders`, requestBody, { headers: {Authorization: `Bearer ${storedToken}`} })
       .then((response) => {
+        const message = response.data.message;
+        setMessage(message);
         // Reset the state
         setUserId("");
         setNotes("");
@@ -71,6 +74,9 @@ function AddOrder(props) {
 
         <button type="submit">Submit</button>
       </form>
+      {message && <p className="message">{message}</p>}
+      <Link to="/products">Continue Shopping</Link>
+      <Link to="/orders">View my orders</Link>
     </div>
   );
 }
