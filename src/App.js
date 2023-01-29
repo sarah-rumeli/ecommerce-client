@@ -53,6 +53,7 @@ function App() {
           <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
+        <Footer />
       </CartProviderWrapper>
     </div>
   );
