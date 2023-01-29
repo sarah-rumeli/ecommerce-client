@@ -2,24 +2,19 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cart-icon {
+  margin-left: auto;
+  display: inline;
+  cursor: pointer;
+}
+.cart-icon > img {
+  max-width: 30px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.AddOrderShowProducts {
-  max-width: 30vw !important;
-  box-shadow: rgba(0, 0, 0, .6) 0 10px 15px;
-  margin: 0 0 2rem 0;
-  padding: 2rem;
+.cart-icon > .cart-count {
+  margin-left: -10px;
+  background-color: #000;
+  color: #fff;
+  padding-right: 4px;
+  border-radius: 15px;
 }

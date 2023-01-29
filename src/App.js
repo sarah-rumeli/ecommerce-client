@@ -20,10 +20,10 @@ import EditProductPage from "./pages/EditProductPage";
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
 import AddOrder from './components/AddOrder';
-import DisplayOrderPage from './components/DisplayOrderPage';
-import SpecificOrder from './components/SpecificOrder';
+//import DisplayOrderPage from './components/DisplayOrderPage';
+//import SpecificOrder from './components/SpecificOrder';
 
-
+import CartPage from "./components/CartPage";
 import { CartProviderWrapper } from "./context/cart.context";
 
 function App() {
@@ -46,8 +46,9 @@ function App() {
           <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
           <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
 
-          <Route path="/orders" element={<DisplayOrderPage />} />
-          <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />
+          {/*<Route path="/orders" element={<DisplayOrderPage />} />
+          <Route path="/orders/edit/:orderId" element={ <EditOrderPage />} />*/}
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </CartProviderWrapper>
     </div>

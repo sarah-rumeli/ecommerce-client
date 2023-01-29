@@ -3,12 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { CartContext } from "../context/cart.context";
 
 const API_URL = "http://localhost:5005";
+
+console.log("*********** ProductDetailsPage *****************");
 
 function ProductDetailsPage(props) {
   const { isLoggedIn, isLoading, user, logOutUser } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   const { productId } = useParams();
 
@@ -28,14 +32,20 @@ function ProductDetailsPage(props) {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    // destructure the addToCart function and cartItems state from the CartContext
+    if (!user) {
+      return;
+    }
     const requestBody = {user: user._id, product}
+    console.log("product: ", product);
     axios
       .post(`${API_URL}/api/cart`, requestBody)
       .then((response) => {
         console.log(response);
+        // update the cartItems state in the component
+        addToCart(product);
       })
       .catch((error) => console.log(error));
-    
   }
 
   return (
@@ -76,9 +86,7 @@ function ProductDetailsPage(props) {
                 </div>
 
                 <div>
-                  <Link onClick={handleSubmit}>
-                    <button>Add to Cart</button>
-                  </Link>
+                  <button onClick={handleSubmit}>Add to Cart</button>
                 </div>
               </>
             )}
