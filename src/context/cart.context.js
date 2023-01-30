@@ -8,14 +8,10 @@ const API_URL = "http://localhost:5005";
 function CartProviderWrapper(props) {
   console.log("************* cart.context.js ***************");
   const storedToken = localStorage.getItem("authToken");
-  console.log("storedToken: ", storedToken);
   const { user } = useContext(AuthContext);
-  if (user) {
-    console.log("user._id: ", user._id);
-  }
-  
-  //const userId = user._id;
-  //console.log("userId: ", userId);
+  //if (user) {
+  //  console.log("user._id: ", user._id);
+  //}
   const [cartItems, setCartItems] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
@@ -29,13 +25,8 @@ function CartProviderWrapper(props) {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then(res => {
-          //if (res.data) {
-            setCartItems(res.data);
-            console.log("setCartItems(res.data) aka cartItems:", res.data);
-          //} else {
-          //  setCartItems("");
-            //console.log(res.data.message);
-          //}
+          setCartItems(res.data);
+          //console.log("cartItems:", res.data);
         })
         .catch(error => console.log(error));
     }
@@ -43,7 +34,28 @@ function CartProviderWrapper(props) {
   }, [user]);
   
   function addToCart(item) {
-    setCartItems([...cartItems, item]);
+    //console.log("item: ", item);
+    //console.log(typeof item);
+    if (!item) {
+        //console.log('item undefined');
+    } else {
+        const { name, _id, price, quantity=1 } = item.product;
+        const newProduct = {name, _id, price, quantity}
+
+        //console.log("addToCart product: ", newProduct);
+
+        const {products} = cartItems;
+        //console.log("products from cartItems? ", products);
+        //console.log(typeof products);
+        const existingProduct = products.find(product => product._id === _id);
+        //console.log('existingProduct: ', existingProduct);
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+            setCartItems([...cartItems]);
+        } else {
+            setCartItems([...cartItems, newProduct]);
+        }
+    }
   }
 
   function removeFromCart(item) {

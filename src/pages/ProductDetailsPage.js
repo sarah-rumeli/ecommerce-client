@@ -41,6 +41,7 @@ function ProductDetailsPage(props) {
       return;
     }
     const requestBody = {user: user._id, product}
+    //console.log("requestBody: ", requestBody);
     console.log("product: ", product);
     axios
       .post(`${API_URL}/api/cart`, requestBody)
@@ -49,7 +50,7 @@ function ProductDetailsPage(props) {
         // update the cartItems state in the component
         const {cart} = response.data;
         console.log("PRODUCT DETAILS: {cart}", cart);
-        addToCart(cart);
+        addToCart(requestBody);
         // Once the request is resolved successfully and the item
         // has been added to the cart we navigate back here
         navigate(`/products/${product._id}`);
