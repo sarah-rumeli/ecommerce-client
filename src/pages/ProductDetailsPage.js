@@ -42,14 +42,14 @@ function ProductDetailsPage(props) {
     }
     const requestBody = {user: user._id, product}
     //console.log("requestBody: ", requestBody);
-    console.log("product: ", product);
+    //console.log("product: ", product);
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
-        console.log("response: ", response);
+        //console.log("response: ", response);
         // update the cartItems state in the component
         const {cart} = response.data;
-        console.log("PRODUCT DETAILS: {cart}", cart);
+        //console.log("PRODUCT DETAILS: {cart}", cart);
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
         // has been added to the cart we navigate back here
@@ -100,7 +100,7 @@ function ProductDetailsPage(props) {
                   </div>
                 ) 
                 }
-                <div class="card-body d-flex justify-content-center">
+                <div className="card-body d-flex justify-content-center">
                 
                   <Link to={`/orders/${productId}`}>
                     <button className="btn btn-success mb-3">Buy Now</button>
