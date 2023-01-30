@@ -26,7 +26,7 @@ import DisplayOrderPage from './components/DisplayOrderPage';
 
 import CartPage from "./components/CartPage";
 import { CartProviderWrapper } from "./context/cart.context";
-
+import Checkout from "./components/Checkout";
 import Footer from "./components/Footer";
 
 function App() {
@@ -52,6 +52,7 @@ function App() {
           <Route path="/orders" element={<IsPrivate> {" "} <DisplayOrderPage />{" "} </IsPrivate>} />
           <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart/checkout" element={<Checkout />} />
         </Routes>
         <Footer />
       </CartProviderWrapper>

@@ -10,18 +10,21 @@ function CartProviderWrapper({ children }) {
   const storedToken = localStorage.getItem("authToken");
   const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+
+  
 
   useEffect(() => {
     if (user) {
       axios
-        .get(`${API_URL}/api/cart/${user._id}`, {
+       .get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then(({ data }) => setCartItems(data))
         .catch((error) => console.error(error));
     }
   }, [user]);
-
+  
   function addToCart(item) {
     if (!item) return;
     const { name, _id, price, quantity = 1 } = item.product;

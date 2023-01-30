@@ -47,27 +47,40 @@ const handleSubmit = (e) => {
   };
 
   return (
-    <div className="EditOrderPage">
+    <div className="container-fluid mb-5 mt-4">
+    <div className="row justify-content-center">
+        <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
       <h3>Edit the Order</h3>
 
       <form onSubmit={handleSubmit}>
-        <label>Status *:</label>
-        <input
-          type="text"
+      <div className="mb-3">
+        <label className="form-label">Status *:</label>
+        <select
+          className="form-control"
           name="status"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-        />
-        <label>
+        >
+        <option value="">Select a status</option>
+        <option value="Awaiting Payment">Awaiting Payment</option>
+        <option value="Received Payment">Received Payment</option>
+        <option value="Dispatched">Dispatched</option>
+        <option value="Delivered">Delivered</option>
+         
+              </select>
+              </div>
+              <div className="mb-3">
+              <label className="form-label">
         Dispatch Date: </label>
-        <input type="date" name ="dispatchDate" value={dispatchDate}  onChange={(e) => setDispatchDate(e.target.value)} />
-     
+        <input className="form-control" type="date" name ="dispatchDate" value={dispatchDate}  onChange={(e) => setDispatchDate(e.target.value)} />
+        </div>
         
-      <button type="submit">Submit</button>
+      <button className="btn bg-success bg-gradient text-light" type="submit">Submit</button>
       </form>
-
+</div>
+      </div>
      
-    </div>
+      </div>
   );
 
 }
