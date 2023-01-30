@@ -21,7 +21,7 @@ function CartProviderWrapper(props) {
     if(user){
       // Fetch the user's cart data from the server
       axios
-       .get(`${API_URL}/api/cart/${user._id}`, {
+       .get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then(res => {

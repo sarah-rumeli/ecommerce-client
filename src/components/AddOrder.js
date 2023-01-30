@@ -40,7 +40,7 @@ function AddOrder(props) {
     const storedToken = localStorage.getItem('authToken');
 
     axios
-      .post(`${API_URL}/api/orders`, requestBody, { headers: {Authorization: `Bearer ${storedToken}`} })
+      .post(`${process.env.REACT_APP_API_URL}/api/orders`, requestBody, { headers: {Authorization: `Bearer ${storedToken}`} })
       .then((response) => {
         const message = response.data.message;
         setMessage(message);

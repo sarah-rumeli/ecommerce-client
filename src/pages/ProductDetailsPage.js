@@ -20,7 +20,7 @@ function ProductDetailsPage(props) {
 
   const getProduct = () => {
     axios
-      .get(`${API_URL}/api/products/${productId}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
         //const comments = response.data.comments;
@@ -44,7 +44,7 @@ function ProductDetailsPage(props) {
     //console.log("requestBody: ", requestBody);
     console.log("product: ", product);
     axios
-      .post(`${API_URL}/api/cart`, requestBody)
+      .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
         console.log("response: ", response);
         // update the cartItems state in the component

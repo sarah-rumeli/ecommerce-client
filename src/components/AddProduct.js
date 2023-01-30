@@ -28,7 +28,7 @@ function AddProduct(props) {
     setImgIsLoading(true);
     console.log("uploading.",uploadImg);
     axios
-      .post(`${API_URL}/api/products/upload`, uploadImg)
+      .post(`${process.env.REACT_APP_API_URL}/api/products/upload`, uploadImg)
       .then((response) => {
         //console.log("response is: ", response.data.fileUrl);
         // response carries "fileUrl" which we can use to update the state
@@ -63,7 +63,7 @@ function AddProduct(props) {
     };
 
     axios
-      .post(`${API_URL}/api/products`, requestBody, {
+      .post(`${process.env.REACT_APP_API_URL}/api/products`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
