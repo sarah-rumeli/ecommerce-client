@@ -41,9 +41,6 @@ function Navbar() {
             {isLoggedIn && (
               <>
               <li className="nav-item">
-                <span className="nav-link">{user && "Hello, " + user.name}</span>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link" to="/profile">My Profile</Link>
               </li>
               <li className="nav-item">
@@ -63,7 +60,10 @@ function Navbar() {
             <>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <button className="nav-link" onClick={logOutUser}>Logout</button>
+                <span className="nav-link">{user && "Hello, " + user.name}</span>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link btn btn-danger bg-gradient text-white" onClick={logOutUser}>Logout</button>
               </li>
             </ul>
             </>
