@@ -1,68 +1,54 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { AuthContext } from "../context/auth.context";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
 
-export const CartContext = createContext();
 const API_URL = "http://localhost:5005";
 
-function CartProviderWrapper(props) {
-  console.log("************* cart.context.js ***************");
+export const CartContext = createContext();
+
+function CartProviderWrapper({ children }) {
   const storedToken = localStorage.getItem("authToken");
   const { user } = useContext(AuthContext);
-  //if (user) {
-  //  console.log("user._id: ", user._id);
-  //}
   const [cartItems, setCartItems] = useState([]);
-  
 
   useEffect(() => {
-    if(user){
-      // Fetch the user's cart data from the server
+    if (user) {
       axios
-       .get(`${API_URL}/api/cart/${user._id}`, {
+        .get(`${API_URL}/api/cart/${user._id}`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
-        .then(res => {
-          setCartItems(res.data);
-          //console.log("cartItems:", res.data);
-        })
-        .catch(error => console.log(error));
+        .then(({ data }) => setCartItems(data))
+        .catch((error) => console.error(error));
     }
-   
   }, [user]);
 
   function addToCart(item) {
-    //console.log("item: ", item);
-    //console.log(typeof item);
-    if (!item) {
-        //console.log('item undefined');
+    if (!item) return;
+    const { name, _id, price, quantity = 1 } = item.product;
+    const newProduct = { name, _id, price, quantity, userId: user._id };
+    const existingProductIndex = cartItems.findIndex(
+      (product) => product._id === _id && product.userId === user._id
+    );
+    if (existingProductIndex !== -1) {
+        const updatedCartItems = [...cartItems];
+        updatedCartItems[existingProductIndex].quantity += 1;
+        setCartItems(updatedCartItems);
     } else {
-        const { name, _id, price, quantity=1 } = item.product;
-        const newProduct = {name, _id, price, quantity}
-
-        //console.log("addToCart product: ", newProduct);
-
-        const {products} = cartItems;
-        //console.log("products from cartItems? ", products);
-        //console.log(typeof products);
-        const existingProduct = products.find(product => product._id === _id);
-        //console.log('existingProduct: ', existingProduct);
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-            setCartItems([...cartItems]);
-        } else {
-            setCartItems([...cartItems, newProduct]);
-        }
+        const updatedCartItems = {
+            ...cartItems,
+            products: [...cartItems.products, newProduct]
+          };
+        setCartItems({ ...cartItems, products: updatedCartItems });
     }
   }
 
   function removeFromCart(item) {
-    setCartItems(cartItems.filter(i => i !== item));
+    setCartItems(cartItems.filter((i) => i !== item));
   }
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
-      {props.children}
+      {children}
     </CartContext.Provider>
   );
 }
