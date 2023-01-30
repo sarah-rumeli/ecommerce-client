@@ -32,7 +32,7 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="App">
-      <CartProviderWrapper>
+      
         <NavBar />
 
         <Routes>
@@ -54,7 +54,6 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
         </Routes>
         <Footer />
-      </CartProviderWrapper>
     </div>
   );
 }
