@@ -12,6 +12,7 @@ console.log("*********** ProductDetailsPage *****************");
 function ProductDetailsPage(props) {
   const { isLoggedIn, isLoading, user, logOutUser,isAdmin } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
+  //const [comments, setComments] = useState([]);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -22,7 +23,9 @@ function ProductDetailsPage(props) {
       .get(`${API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
+        //const comments = response.data.comments;
         setProduct(oneProduct);
+        //setComments(comments);
       })
       .catch((error) => console.log(error));
   };
@@ -56,62 +59,66 @@ function ProductDetailsPage(props) {
 
   return (
     <>
-      <div className="ProductDetails">
+      <div className="container-fluid">
+      <div className="row justify-content-center">
         {product && (
-          <>
-            <h1>{product.name}</h1>
-            <p> Description:{product.description}</p>
-            <p>
-              {" "}
+          <div className="card border-success mt-3 mx-3 p-0 col-xl-3 col-lg-3 col-md-5 col-sm-8 col-8 shadow">
+          
+               <img src={product.img} className="card-img-top bg-dark m-0 ml-n1 p-n1" alt="Product" />
+               <div className="card-body">
+            <h5 className="text-success">{product.name}</h5>
+            <p className="card-text"> {product.description}</p>
+           
+             
               Created by:
               <span>{product.user.name}</span>
               <br></br>
               <span>{product.user.email}</span>
               <span>{product.user._id}</span>
-            </p>
-            <p>Price :{product.price}</p>
+           
+            <p className="card-text">Price :{product.price}</p>
             <p>Category:{product.category}</p>
-            <p>
-              Image: <img src={product.img} alt="Product" />
-            </p>
+            </div>
 
             {isLoggedIn && (
               
               <>
                 {user._id === product.user._id && (
-                  <>
+                  <div className="card-footer-light bg-transparent border-success">
                     <Link to={`/products/edit/${productId}`}>
-                      <button>Edit Product</button>
+                      <button className="btn btn-secondary mb-3">Edit Product</button>
                     </Link>
-                  </>
+                  </div>
                 ) 
                 }
                 {user.isAdmin && (
-                  <>
+                  <div className="card-footer-light bg-transparent border-success">
                     <Link to={`/products/edit/${productId}`}>
-                      <button>Edit Product</button>
+                      <button className="btn btn-secondary mb-3">Edit Product</button>
                     </Link>
-                  </>
+                  </div>
                 ) 
                 }
-
-                <div>
+                <div class="card-body d-flex justify-content-center">
+                
                   <Link to={`/orders/${productId}`}>
-                    <button>Order Now</button>
+                    <button className="btn btn-success mb-3">Buy Now</button>
                   </Link>
-                </div>
+                
 
-                <div>
-                  <button onClick={handleSubmit}>Add to Cart</button>
+               
+                  <button className="btn btn-primary mb-3 ml-3" onClick={handleSubmit}>Add to Cart</button>
+              
                 </div>
               </>
             )}
-          </>
+          </div>
         )}
 
         <Link to="/products">
-          <button>Back to products</button>
+          <button className="btn btn-info mb-3">Back to products</button>
         </Link>
+      </div>
       </div>
     </>
   );

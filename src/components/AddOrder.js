@@ -23,7 +23,8 @@ function AddOrder(props) {
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`, { headers: {Authorization: `Bearer ${storedToken}`} })
+      .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`,
+       { headers: {Authorization: `Bearer ${storedToken}`} })
       .then((response) => {
           const oneProduct = response.data;
           setName(oneProduct.name);

@@ -17,6 +17,8 @@ function CartProviderWrapper(props) {
   //const userId = user._id;
   //console.log("userId: ", userId);
   const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+
   
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function CartProviderWrapper(props) {
     }
    
   }, [user]);
-
+  
   function addToCart(item) {
     setCartItems([...cartItems, item]);
   }

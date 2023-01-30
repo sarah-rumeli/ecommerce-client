@@ -64,7 +64,7 @@ return(
   return (
     <>
     {!isLoading &&
-    <div className="OrderListPage">
+    <div className="container-fluid">
     {message && <p className="message">{message}</p>}
     {orders.length===0 && renderDetails()}
       <div>{console.log(orders)}</div>
