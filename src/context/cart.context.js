@@ -53,17 +53,13 @@ function CartProviderWrapper({ children }) {
               setCartItems([...cartItems]);
           } else {
               const {products}= cartItems[0];
+              /*setCartItems((prevCartItems) => {
+              [...prevCartItems,{ products:{_id:_id,name:name, price:price,quantity:1}}];
+              })*/
               setCartItems([...cartItems,{ products:{_id:_id,name:name, price:price,quantity:1}}]);
           }
       }
     }
-
-    useEffect(() => {
-      
-  },[])
-  
- 
-
 
   function removeFromCart(item) {
     setCartItems(cartItems.filter((i) => i !== item));
