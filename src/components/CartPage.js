@@ -11,15 +11,15 @@ function CartPage() {
   console.log("******** CartPage.js clg**********");
   const { isLoading } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 
-  const [userId , setUserId] = useState(user._id);
+  const [userId, setUserId] = useState(user._id);
   const [notes, setNotes] = useState("");
-  const [total,setTotalPrice] = useState(0);
+  const [total, setTotalPrice] = useState(0);
   const [status, setStatus] = useState("Awaiting Payment");
-  const [message, setMessage] = useState(undefined); 
-  const [orderId,setOrderId] = useState(""); 
+  const [message, setMessage] = useState(undefined);
+  const [orderId, setOrderId] = useState("");
   const navigate = useNavigate();
   let totalQuantity = 0;
   let totalPrice = 0;
@@ -27,109 +27,180 @@ function CartPage() {
     useEffect(() => {
       setProducts(cartItems[0].products);
     }, []);
-    
+
     //console.log("products: ", products);
-    totalQuantity = products.reduce((acc, product) => acc + product.quantity, 0);
-    totalPrice = products.reduce((acc, product) => acc + (product.quantity * product.price), 0);
+    totalQuantity = products.reduce(
+      (acc, product) => acc + product.quantity,
+      0
+    );
+    totalPrice = products.reduce(
+      (acc, product) => acc + product.quantity * product.price,
+      0
+    );
   }
- 
+
   console.log("cartItems: ", cartItems);
   console.log("totalQuantity: ", totalQuantity);
 
-const handleCheckout = (e) =>{
-  e.preventDefault();
+  const deleteCartItem = (productId) => {
+    console.log("delete item from cart");
+    const storedToken = localStorage.getItem("authToken");
+    const requestBody = { user: userId };
+    console.log("requestBody: ", requestBody);
 
-  const storedToken = localStorage.getItem('authToken');
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/api/cart/${productId}`, {
+        data: requestBody,
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        const message = response.data.message;
+        setMessage(message);
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId)
+        );
+        console.log("cartItems[0].products: ", cartItems[0].products);
+      })
+      .catch((error) =>
+        console.log(
+          "There has been error deleting this Product from the Cart: ",
+          error
+        )
+      );
+  };
 
-  axios.get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`,
-  { headers: {Authorization: `Bearer ${storedToken}`} })
-  .then((response)=>{
-    const cart = response.data[0];
-    console.log("to be ordered",cart);
-      const total = cart.products.reduce((acc, product) => acc + (product.quantity * product.price), 0);
-      const cartToOrder = {
+  const handleCheckout = (e) => {
+    e.preventDefault();
+
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        const cart = response.data[0];
+        console.log("to be ordered", cart);
+        const total = cart.products.reduce(
+          (acc, product) => acc + product.quantity * product.price,
+          0
+        );
+        const cartToOrder = {
           userId: cart.user,
           products: cart.products,
           status: "Awaiting Payment",
-          totalPrice:total
-      }
-       return axios.post(`${process.env.REACT_APP_API_URL}/api/orders`, cartToOrder, { headers: {Authorization: `Bearer ${storedToken}`} })
+          totalPrice: total,
+        };
+        return axios.post(
+          `${process.env.REACT_APP_API_URL}/api/orders`,
+          cartToOrder,
+          { headers: { Authorization: `Bearer ${storedToken}` } }
+        );
+      })
+      .then((responseFromOrder) => {
+        console.log(responseFromOrder);
 
-  })
-  .then((responseFromOrder) => {
-      console.log(responseFromOrder);
-      
-      return axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/remove/${user._id}`, { headers: {Authorization: `Bearer ${storedToken}`} })
-  })
-  .then(response => console.log(response.data.message))
-  .catch(error => console.log(error));
+        return axios.delete(
+          `${process.env.REACT_APP_API_URL}/api/cart/remove/${user._id}`,
+          { headers: { Authorization: `Bearer ${storedToken}` } }
+        );
+      })
+      .then((response) => console.log(response.data.message))
+      .catch((error) => console.log(error));
 
-navigate("/orders");
-}
+    navigate("/orders");
+  };
 
-
-return (
-  <div className="container-fluid mt-3 mb-5">
-    <div className="row justify-content-center">
-      <h1>Your Cart</h1>
+  return (
+    <>
       {!isLoading && (
-        <>
-          <div className="col-md-6">
-            {products.map((product) => {
-              return (
-                <>
-                <div className="card border-success shadow mb-1" key={product._id}>
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img src={product.img} class="img-fluid rounded-start" alt="Need to pull in images" />
-                    </div>
-                    <div class="col-md-8">
-                        
-                      <div class="card-body text-start">
-                        <div className="row">
-                          <div className="col-9">
-                            <h5 class="card-title">{product.name} </h5>
-                            <p class="card-text">
-                            <small>€ {product.price} each x {product.quantity}</small>
-                            </p>
-                          </div>
+        <div className="container-fluid mt-3 mb-5">
+          <div className="row justify-content-center">
+            <h1>Your Cart</h1>
+            {products.length > 0 ? (
+              <>
+                <div className="col-md-6">
+                  {products.map((product, index) => {
+                    return (
+                      <>
+                        <div
+                          className="card border-success shadow mb-1"
+                          key={index}
+                        >
+                          <div className="row g-0">
+                            <div className="col-md-4">
+                              <img
+                                src={product.img}
+                                className="img-fluid rounded-start"
+                                alt="Need to pull in images"
+                              />
+                            </div>
+                            <div className="col-md-8">
+                              <div className="card-body text-start">
+                                <div className="row">
+                                  <div className="col-9">
+                                    <h5 className="card-title">
+                                      {product.name}{" "}
+                                    </h5>
+                                    <p className="card-text">
+                                      <small>
+                                        € {product.price} each x{" "}
+                                        {product.quantity}
+                                      </small>
+                                    </p>
+                                  </div>
 
-                          <div className="col-3 justify-content-end green">
-                            <button className="btn btn-danger bg-gradient btn-sm">x</button>
+                                  <div className="col-3 justify-content-end green">
+                                    <button
+                                      onClick={() =>
+                                        deleteCartItem(product._id)
+                                      }
+                                      className="btn btn-danger bg-gradient btn-sm"
+                                    >
+                                      x
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="row rounded-3 justify-content-end">
+                                  <div className="btn btn-success bg-gradient w-50 pe-none">
+                                    Sub-Total: €{" "}
+                                    {product.price * product.quantity}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div className="row rounded-3 justify-content-end">
-                          <div className="btn btn-success bg-gradient w-50 pe-none">
-                            Sub-Total: € {product.price * product.quantity}
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-                  </div>
-
+                        <div className="w-100"></div>
+                      </>
+                    );
+                  })}
                 </div>
-                <div className="w-100"></div>
-                </>
-                
-              );
-            })}
-          </div>
-          <div className="col-md-4 bg-dark align-middle text-light rounded-3">
-            <div>
-            <h3>Total € {totalPrice}</h3>
+                <div className="col-md-4 bg-dark align-middle text-light rounded-3">
+                  <div>
+                    <h3>Total € {totalPrice}</h3>
 
-            <button className="btn btn-secondary mb-3" type="submit" onClick={handleCheckout}>
-              Checkout
-            </button>
-            </div>
+                    <button className="btn btn-secondary mb-3" type="submit" onClick={handleCheckout}>
+                      Checkout
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* CART empty message... like the add form style... */}
+                <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
+                  Oops, it looks like your cart is empty...
+                  <p></p>
+                  <Link className="btn bg-success bg-gradient text-light" to='../products'>Get Shopping!</Link>
+                </div>
+              </>
+            )}
           </div>
-        </>
+        </div>
       )}
-    </div>
-  </div>
-);
+    </>
+  );
 }
 
 export default CartPage;
