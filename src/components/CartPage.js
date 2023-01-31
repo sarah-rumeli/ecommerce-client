@@ -117,15 +117,15 @@ function CartPage() {
         <div className="container-fluid mt-3 mb-5">
           <div className="row justify-content-center">
             <h1>Your Cart</h1>
-            {!isLoading && (
+            {products.length > 0 ? (
               <>
                 <div className="col-md-6">
-                  {products.map((product) => {
+                  {products.map((product, index) => {
                     return (
                       <>
                         <div
                           className="card border-success shadow mb-1"
-                          key={product._id}
+                          key={index}
                         >
                           <div className="row g-0">
                             <div className="col-md-4">
@@ -184,6 +184,15 @@ function CartPage() {
                       Checkout
                     </button>
                   </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* CART empty message... like the add form style... */}
+                <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
+                  Oops, it looks like your cart is empty...
+                  <p></p>
+                  <Link className="btn bg-success bg-gradient text-light" to='../products'>Get Shopping!</Link>
                 </div>
               </>
             )}
