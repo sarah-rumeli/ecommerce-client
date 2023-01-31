@@ -1,12 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { AuthContext } from "../context/auth.context";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
 
-export const CartContext = createContext();
 const API_URL = "http://localhost:5005";
 
-function CartProviderWrapper(props) {
-  console.log("************* cart.context.js ***************");
+export const CartContext = createContext();
+
+function CartProviderWrapper({ children }) {
   const storedToken = localStorage.getItem("authToken");
   const { user } = useContext(AuthContext);
   //if (user) {
@@ -19,19 +19,14 @@ function CartProviderWrapper(props) {
   
 
   useEffect(() => {
-    if(user){
-      // Fetch the user's cart data from the server
+    if (user) {
       axios
        .get(`${process.env.REACT_APP_API_URL}/api/cart/${user._id}`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
-        .then(res => {
-          setCartItems(res.data);
-          //console.log("cartItems:", res.data);
-        })
-        .catch(error => console.log(error));
+        .then(({ data }) => setCartItems(data))
+        .catch((error) => console.error(error));
     }
-   
   }, [user]);
  
 
@@ -71,12 +66,12 @@ function CartProviderWrapper(props) {
 
 
   function removeFromCart(item) {
-    setCartItems(cartItems.filter(i => i !== item));
+    setCartItems(cartItems.filter((i) => i !== item));
   }
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
-      {props.children}
+      {children}
     </CartContext.Provider>
   );
 }

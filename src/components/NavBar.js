@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { CartContext, CartCountDisplay } from "../context/cart.context";
+import { CartContext } from "../context/cart.context";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -10,12 +10,10 @@ function Navbar() {
   let totalQuantity = 0;
   if (cartItems && cartItems.length >= 1) {
     const { products } = cartItems[0];
+    //console.log('products: ', products);
     totalQuantity = products.reduce((acc, product) => acc + product.quantity, 0);
   }
-  console.log("********NavBar.js clg**********");
-  console.log("cartItems: ", cartItems);
-  //console.log("products: ", products);
-  console.log("totalQuantity: ", totalQuantity);
+  //console.log("totalQuantity: ", totalQuantity);
 
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light alert-success">

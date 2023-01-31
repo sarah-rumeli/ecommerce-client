@@ -16,7 +16,7 @@ function CartPage() {
 
   const [userId , setUserId] = useState(user._id);
   const [notes, setNotes] = useState("");
-const [total,setTotalPrice] = useState(0);
+  const [total,setTotalPrice] = useState(0);
   const [status, setStatus] = useState("Awaiting Payment");
   const [message, setMessage] = useState(undefined); 
   const [orderId,setOrderId] = useState(""); 
@@ -28,7 +28,7 @@ const [total,setTotalPrice] = useState(0);
       setProducts(cartItems[0].products);
     }, []);
     
-    console.log("products: ", products);
+    //console.log("products: ", products);
     totalQuantity = products.reduce((acc, product) => acc + product.quantity, 0);
     totalPrice = products.reduce((acc, product) => acc + (product.quantity * product.price), 0);
   }
@@ -68,34 +68,68 @@ navigate("/orders");
 }
 
 
-  return (
-    <>
-    <h1>Cart</h1>
-    {!isLoading &&
-      <div className="CartPage">
-        {products.map((product) => {
-          return (
-            <div className="CartCard card" key={product.id}>
-                <div>
-                  <div>Product Name: {product.name} (€ {product.price} each)</div>
-                  <div>Quantity:{product.quantity}</div>
-                  <div> x </div>
-                  <div>€ {(product.price * product.quantity)}</div>
+return (
+  <div className="container-fluid mt-3 mb-5">
+    <div className="row justify-content-center">
+      <h1>Your Cart</h1>
+      {!isLoading && (
+        <>
+          <div className="col-md-6">
+            {products.map((product) => {
+              return (
+                <>
+                <div className="card border-success shadow mb-1" key={product._id}>
+                  <div className="row g-0">
+                    <div className="col-md-4">
+                      <img src={product.img} class="img-fluid rounded-start" alt="Need to pull in images" />
+                    </div>
+                    <div class="col-md-8">
+                        
+                      <div class="card-body text-start">
+                        <div className="row">
+                          <div className="col-9">
+                            <h5 class="card-title">{product.name} </h5>
+                            <p class="card-text">
+                            <small>€ {product.price} each x {product.quantity}</small>
+                            </p>
+                          </div>
+
+                          <div className="col-3 justify-content-end green">
+                            <button className="btn btn-danger bg-gradient btn-sm">x</button>
+                          </div>
+                        </div>
+                        <div className="row rounded-3 justify-content-end">
+                          <div className="btn btn-success bg-gradient w-50 pe-none">
+                            Sub-Total: € {product.price * product.quantity}
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
                 </div>
+                <div className="w-100"></div>
+                </>
+                
+              );
+            })}
+          </div>
+          <div className="col-md-4 bg-dark align-middle text-light rounded-3">
+            <div>
+            <h3>Total € {totalPrice}</h3>
+
+            <button className="btn btn-secondary mb-3" type="submit" onClick={handleCheckout}>
+              Checkout
+            </button>
             </div>
-          );
-        })}
-        <h3>Total € {totalPrice}</h3>
-       
-                  <button className="btn btn-secondary mb-3" type="submit" onClick={handleCheckout}>Checkout</button>
-                  
-      </div>
-      
-    
-    }
-   
-    </>
-  );
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+);
 }
 
 export default CartPage;
