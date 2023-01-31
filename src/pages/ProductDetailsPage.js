@@ -12,7 +12,8 @@ console.log("*********** ProductDetailsPage *****************");
 function ProductDetailsPage(props) {
   const { isLoggedIn, isLoading, user, logOutUser,isAdmin } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
-  //const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [rating, setRating] = useState(0);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -53,11 +54,25 @@ function ProductDetailsPage(props) {
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
         // has been added to the cart we navigate back here
-        navigate(`/products/${product._id}`);
+        navigate(`/products`);
       })
       .catch((error) => console.log(error));
   }
-
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    if (!user) {
+      return;
+    }
+    const requestBody = {userId: user._id, comment:comments, rating:rating}
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/api/products/:productId/comments`, requestBody)
+      .then((response) => {
+          console.log("Response success");
+        })
+        .catch((err) => {
+          console.log("Error while posting comment",err)
+        });
+      }
   return (
     <>
       <div className="container-fluid">
@@ -100,7 +115,7 @@ function ProductDetailsPage(props) {
                   </div>
                 ) 
                 }
-                <div class="card-body d-flex justify-content-center">
+                <div className="card-body d-flex justify-content-center">
                 
                   <Link to={`/orders/${productId}`}>
                     <button className="btn btn-success mb-3">Buy Now</button>
@@ -119,6 +134,25 @@ function ProductDetailsPage(props) {
         <Link to="/products">
           <button className="btn btn-info mb-3">Back to products</button>
         </Link>
+        <form onSubmit={handleAddComment}>
+        <label>Comments</label>        
+        <textarea className="Comments"
+         type="text"
+          name="comments"
+          onChange={(e) => setComments(e.target.value)}
+          />
+          <br></br>
+          <label>Rating</label>
+          <input 
+            type="number"
+            name = "rating"
+            onChange={(e) => setRating(e.target.value)}
+            />
+
+
+          <br></br>
+          <button type="submit">Add Comment</button>
+        </form>
       </div>
       </div>
     </>

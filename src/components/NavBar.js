@@ -6,6 +6,7 @@ import { CartContext, CartCountDisplay } from "../context/cart.context";
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
+  const { productsFromContext} = useContext(CartContext);
   let totalQuantity = 0;
   if (cartItems && cartItems.length >= 1) {
     const { products } = cartItems[0];

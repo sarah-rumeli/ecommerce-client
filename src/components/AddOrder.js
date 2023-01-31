@@ -12,6 +12,7 @@ function AddOrder(props) {
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [status, setStatus] = useState("Awaiting Payment");
   const [message, setMessage] = useState(undefined); 
  // const [orderDate, setOrderDate] = useState(new Date());
@@ -35,7 +36,7 @@ function AddOrder(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { userId, products:{productId, name}, totalPrice:price, notes, status };
+    const requestBody = { userId, products:{productId, name, quantity}, totalPrice:price*quantity, notes, status };
     console.log(requestBody);
     const storedToken = localStorage.getItem('authToken');
 
@@ -72,7 +73,12 @@ function AddOrder(props) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-
+        <label>Quantity :</label>
+        <input
+          type="number"
+          name="quantity"
+          onChange={(e) => setQuantity(e.target.value)}
+          />
         <button type="submit">Submit</button>
       </form>
       {message && <p className="message">{message}</p>}
