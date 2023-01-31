@@ -53,6 +53,8 @@ function App() {
           <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/cart/checkout" element={<Checkout />} />
+          {/* Change to a nice 404 page */}
+          <Route path="*" element={<h1>404: Sorry, this route does not exist.</h1>} />
         </Routes>
         <Footer />
       </CartProviderWrapper>
