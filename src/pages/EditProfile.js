@@ -64,34 +64,44 @@ function EditProfile(props) {
   };
 
   return (
-    <div className="EditProfilePage">
+    <div style ={{width:"60%",marginLeft:"20vw"}}>
       <h3>Edit Profile</h3>
 
       <form onSubmit={handleFormSubmit}>
-        <label>Name:</label>
+      <div className="form-outline mb-4">
+      <label className="form-label" for="form4Example1">Name:</label>
         <input
           type="text"
+          id="form4Example1" className="form-control"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+         
+ </div>
 
-        <label>Email:</label>
+ <div className="form-outline mb-4">
+ <label classname="form-label" for="form4Example2">Email:</label>
         <input
-          type="text"
+          type="email"
+          id="form4Example2" className="form-control"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label>Address:</label>
+</div>
+ <div className="form-outline mb-4">
+ <label className="form-label" for="form4Example3">Address:</label>
         <textarea
           name="address"
+          className="form-control" id="form4Example3" rows="4"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-
-        <button type="submit">Update Profile</button>
+        
+        </div>
+        <button type="submit" className="btn btn-primary btn-block mb-4">Update Profile</button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
