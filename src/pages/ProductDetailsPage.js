@@ -161,20 +161,26 @@ function ProductDetailsPage(props) {
                         <div className="card-text">{product.user.name}</div>
                         <div className="card-text">{product.user.email}</div>
                       </div>
-                      {user._id === product.user._id && (
+                      
+                      {user._id === product.user._id ? (
+                        <>
+                        <Link to={`/products/edit/${productId}`}>
+                          <button className="btn btn-outline-success mb-3">
+                            Edit Product
+                          </button>
+                        </Link>
+                        </>
+                      ) : <>
+                       {user.isAdmin && (
                         <Link to={`/products/edit/${productId}`}>
                           <button className="btn btn-outline-success mb-3">
                             Edit Product
                           </button>
                         </Link>
                       )}
-                      {user.isAdmin && (
-                        <Link to={`/products/edit/${productId}`}>
-                          <button className="btn btn-outline-success mb-3">
-                            Edit Product
-                          </button>
-                        </Link>
-                      )}
+                      </>
+                      }
+                      
                     </>
                   )}
                 </div>

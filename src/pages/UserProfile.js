@@ -8,9 +8,18 @@ import { Link } from "react-router-dom";
 const API_URL = "http://localhost:5005";
 
 function UserProfile() {
-  const { isLoggedIn, isLoading, user, authenticateUser } =
+  const { isLoggedIn, isLoading, user, authenticateUser,logOutUser} =
     useContext(AuthContext);
   const [profile, setProfile] = useState(user);
+
+  const handleDelete = () => {
+    const storedToken = localStorage.getItem('authToken');
+    axios.delete(`${process.env.REACT_APP_API_URL}/auth/profile/${user._id}`,
+     { headers: {Authorization: `Bearer ${storedToken}`} })
+     .then((response) => {
+      logOutUser();
+     })
+  }
 
   return (
     <>
@@ -92,7 +101,7 @@ function UserProfile() {
                               </button>
                             </Link>
                             <Link to="">
-                              <button className="btn btn-outline-danger rounded">
+                              <button className="btn btn-outline-danger rounded" onClick={handleDelete}>
                                 Delete Profile
                               </button>
                             </Link>
