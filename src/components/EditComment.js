@@ -1,18 +1,40 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import StarRating from "./StarRating";
 import "../App.css";
 
-function AddComment(props) {
+function EditComment() {
   const { isLoggedIn, user, logOutUser, isLoading } = useContext(AuthContext);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState([]);
   const [rating, setRating] = useState(0);
-  const productId = props.productId;
+  const {commentId} = useParams();
+  const {productId} = useParams();
+  const navigate = useNavigate();
+console.log("comments", commentId);
+console.log("products",productId);
 
-  const handleAddComment = (e) => {
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}/comments/${commentId}`, { headers: {Authorization: `Bearer ${storedToken}`} })
+    .then((response) => {
+        console.log("response from comment;",response.data)
+        const oneComment = response.data;
+        setComment(oneComment.comment);
+        setRating(oneComment.rating);
+        
+    })
+    .catch((error) => console.log("There has been error retrieving comment Details: ", error));
+  }, []);
+
+console.log("rating:",rating);
+console.log("comment:",comment);
+
+  const handleEditComment = (e) => {
     e.preventDefault();
     if (!user) {
       return;
@@ -24,8 +46,8 @@ function AddComment(props) {
       rating: rating,
     };
     axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/products/:productId/comments`,
+      .put(
+        `${process.env.REACT_APP_API_URL}/api/products/${productId}/comments/${commentId}/edit`,
         requestBody
       )
       .then((response) => {
@@ -34,8 +56,8 @@ function AddComment(props) {
         // Reset the state
         setComment("");
         setRating(0);
-
-        props.refreshComments();
+        navigate(`/products/${productId}`);
+        
       })
       .catch((err) => {
         console.log("Error while posting comment", err);
@@ -50,10 +72,10 @@ function AddComment(props) {
     <div className="container-fluid mb-5 mt-4">
       <div className="row justify-content-center">
         <div className="col-10 col-sm-10 col-md-7 col-lg-7 m-3 p-5 rounded-3 text-dark box-bg-gradient shadow">
-          <form onSubmit={handleAddComment}>
+          <form onSubmit={handleEditComment}>
             <div className="mb-3">
               <label className="add-comment form-label fw-bolder">
-                <h3 className="text-white">Add a Comment</h3>
+                <h3 className="text-white">Edit Comment</h3>
               </label>
               <textarea
                 className="form-control"
@@ -71,7 +93,7 @@ function AddComment(props) {
               <StarRating ratingSetter={ratingSetter} rating={rating} />
             </div>
             <button className="btn btn-success bg-gradient text-light mt-2" type="submit">
-              Add Comment
+              Submit
             </button>
           </form>
         </div>
@@ -80,4 +102,4 @@ function AddComment(props) {
   );
 }
 
-export default AddComment;
+export default EditComment;
