@@ -73,3 +73,30 @@ body {
 .pink {
   border: 1px solid #fc41ff
 }
+
+
+/* For STARS in Ratings */
+
+.Stars_on{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: rgb(250, 159, 2);
+}
+
+.Stars_off { 
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: rgb(66, 65, 65);
+}
+.star{
+  
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: rgb(250, 159, 2);
+  }

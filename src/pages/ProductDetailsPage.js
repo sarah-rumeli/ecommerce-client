@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { CartContext } from "../context/cart.context";
+import AddComment from "../components/AddComment";
 
 const API_URL = "http://localhost:5005";
 
 console.log("*********** ProductDetailsPage *****************");
 
 function ProductDetailsPage(props) {
-  const { isLoggedIn, isLoading, user, logOutUser,isAdmin } = useContext(AuthContext);
+  const { isLoggedIn, isLoading, user, logOutUser, isAdmin } =
+    useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [comments, setComments] = useState([]);
-  const [rating, setRating] = useState(0);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -24,9 +25,9 @@ function ProductDetailsPage(props) {
       .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
-        //const comments = response.data.comments;
+       
         setProduct(oneProduct);
-        //setComments(comments);
+        
       })
       .catch((error) => console.log(error));
   };
@@ -34,14 +35,34 @@ function ProductDetailsPage(props) {
   useEffect(() => {
     getProduct();
   }, []);
-  
+
+  const getAllComments = () => {
+    const storedToken = localStorage.getItem("authToken");
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/products/${productId}/comments`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
+      .then((response) => {
+        // variable that filters array
+
+        console.log("response for hsky", response.data);
+        setComments(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getAllComments();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // destructure the addToCart function and cartItems state from the CartContext
     if (!user) {
       return;
     }
-    const requestBody = {user: user._id, product}
+    const requestBody = { user: user._id, product };
     //console.log("requestBody: ", requestBody);
     //console.log("product: ", product);
     axios
@@ -49,7 +70,7 @@ function ProductDetailsPage(props) {
       .then((response) => {
         //console.log("response: ", response);
         // update the cartItems state in the component
-        const {cart} = response.data;
+        const { cart } = response.data;
         //console.log("PRODUCT DETAILS: {cart}", cart);
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
@@ -57,103 +78,117 @@ function ProductDetailsPage(props) {
         navigate(`/products`);
       })
       .catch((error) => console.log(error));
-  }
-  const handleAddComment = (e) => {
-    e.preventDefault();
-    if (!user) {
-      return;
-    }
-    const requestBody = {userId: user._id, comment:comments, rating:rating}
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/products/:productId/comments`, requestBody)
-      .then((response) => {
-          console.log("Response success");
-        })
-        .catch((err) => {
-          console.log("Error while posting comment",err)
-        });
-      }
+  };
+
   return (
     <>
       <div className="container-fluid">
-      <div className="row justify-content-center">
-        {product && (
-          <div className="card border-success mt-3 mx-3 p-0 col-xl-3 col-lg-3 col-md-5 col-sm-8 col-8 shadow">
-          
-               <img src={product.img} className="card-img-top bg-dark m-0 ml-n1 p-n1" alt="Product" />
-               <div className="card-body">
-            <h5 className="text-success">{product.name}</h5>
-            <p className="card-text"> {product.description}</p>
-           
-             
-              Created by:
-              <span>{product.user.name}</span>
-              <br></br>
-              <span>{product.user.email}</span>
-              <span>{product.user._id}</span>
-           
-            <p className="card-text">Price :{product.price}</p>
-            <p>Category:{product.category}</p>
-            </div>
-
-            {isLoggedIn && (
+      <div className="card mb-3" >
+          {product && (
+            <div className="row g-0">
+              <div className="col-md-3" style={{ marginTop: "4vw",marginLeft:"1vw" }}>
+              <img 
+                src={product.img}
+                className="img-fluid rounded-start"
+                style={{ width: "30vw",height:"30vw" }}
+                alt="Product"
+              />
+              </div>
+              <div className="col-md-5">
+              <div className="card-body ">
+                <h5 className="card-title  ">{product.name}</h5>
               
-              <>
-                {user._id === product.user._id && (
-                  <div className="card-footer-light bg-transparent border-success">
-                    <Link to={`/products/edit/${productId}`}>
-                      <button className="btn btn-secondary mb-3">Edit Product</button>
-                    </Link>
-                  </div>
-                ) 
-                }
-                {user.isAdmin && (
-                  <div className="card-footer-light bg-transparent border-success">
-                    <Link to={`/products/edit/${productId}`}>
-                      <button className="btn btn-secondary mb-3">Edit Product</button>
-                    </Link>
-                  </div>
-                ) 
-                }
-                <div className="card-body d-flex justify-content-center">
-                
-                  <Link to={`/orders/${productId}`}>
-                    <button className="btn btn-success mb-3">Buy Now</button>
-                  </Link>
-                
-
-               
-                  <button className="btn btn-primary mb-3 ml-3" onClick={handleSubmit}>Add to Cart</button>
-              
+                <p className="card-text" style={{ fontWeight: "bold" }}>{product.category}</p>
+                <hr/>
+                <p className="card-text text-center"> {product.description}</p>
                 </div>
+                </div>
+                <div className="col-md-3">
+                <div className="card-body card border-success " style={{ marginTop: "4.5vw",marginRight:"1vw" }}>
+                Created by:
+                <span className="card-text">{product.user.name}</span>
+                <br></br>
+                <span className="card-text">{product.user.email}</span>
+                
+                <p className="card-text" style={{ fontWeight: "bold" }}>Price :{product.price} Euro</p>
+                
+                {isLoggedIn && (
+                <>
+                {user._id === product.user._id && (
+                    
+                      <Link to={`/products/edit/${productId}`}>
+                        <button className="btn btn-secondary mb-3" >
+                          Edit Product
+                        </button>
+                      </Link>
+                     
+                  )}
+                  {user.isAdmin && (
+                    
+                      <Link to={`/products/edit/${productId}`}>
+                        <button className="btn btn-secondary mb-3">
+                          Edit Product
+                        </button>
+                      </Link>
+                    
+                    
+                  )}
+                 <div className="container" style={{display:"flex",gap:"1vw", justifyContent:"center"}}>
+                    <Link to={`/orders/${productId}`}>
+                      <button className="btn btn-success mb-3" style={{paddingLeft:"1vw",paddingRight:"1vw" }}>Buy Now</button>
+                    </Link>
+                 
+                  
+                    <button
+                      className="btn btn-primary mb-3"
+                      onClick={handleSubmit}
+                    >
+                      Add to Cart
+                    </button>
+                  
+                    </div>
+                </>
+              )}
+              </div>
+              </div>
+            
+
+                
+            </div>
+          )}
+
+          <Link to="/products">
+            <button className="btn btn-info mb-3">Back to products</button>
+          </Link>
+          <AddComment productId={productId} refreshComments={getAllComments}/>
+          {comments.map((comment) => {
+            return (
+              <>
+              <div className="row justify-content-center">
+              <div className="card col-10 col-lg-7 col-md-10 col-sm-10  m-3 p-5  text-dark rounded-3" style={{
+        border: '5px solid',
+        borderImage: 'linear-gradient(to right, green, lightblue) 1',
+        borderImageSlice: 1,
+        backgroundClip: 'content-box'}}>
+              <div className="card-header" key={comment._id} >
+              <h5>Rating: {[...Array(comment.rating)].map((star) => {
+                  return <span className="star">&#9733;</span>
+                })}</h5>
+                
+                </div>
+               <div className="card-body">
+               <h5 className="card-title">{comment.comment}</h5>
+               <p className="card-text">Author: {comment.userId.name}</p>
+
+               </div>
+              </div>
+              </div>
               </>
-            )}
-          </div>
-        )}
+            );
+          })}
 
-        <Link to="/products">
-          <button className="btn btn-info mb-3">Back to products</button>
-        </Link>
-        <form onSubmit={handleAddComment}>
-        <label>Comments</label>        
-        <textarea className="Comments"
-         type="text"
-          name="comments"
-          onChange={(e) => setComments(e.target.value)}
-          />
-          <br></br>
-          <label>Rating</label>
-          <input 
-            type="number"
-            name = "rating"
-            onChange={(e) => setRating(e.target.value)}
-            />
-
-
-          <br></br>
-          <button type="submit">Add Comment</button>
-        </form>
-      </div>
+          
+        </div>
       </div>
     </>
   );

@@ -14,7 +14,7 @@ function CartPage() {
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 
-  const [userId, setUserId] = useState(user._id);
+  //const [userId, setUserId] = useState(user._id);
   const [notes, setNotes] = useState("");
   const [total, setTotalPrice] = useState(0);
   const [status, setStatus] = useState("Awaiting Payment");
@@ -23,10 +23,11 @@ function CartPage() {
   const navigate = useNavigate();
   let totalQuantity = 0;
   let totalPrice = 0;
+  useEffect(() => {
   if (cartItems && cartItems.length > 0) {
-    useEffect(() => {
+    
       setProducts(cartItems[0].products);
-    }, []);
+    
 
     //console.log("products: ", products);
     totalQuantity = products.reduce(
@@ -38,14 +39,14 @@ function CartPage() {
       0
     );
   }
-
+}, [cartItems[0]]);
   console.log("cartItems: ", cartItems);
   console.log("totalQuantity: ", totalQuantity);
 
   const deleteCartItem = (productId) => {
     console.log("delete item from cart");
     const storedToken = localStorage.getItem("authToken");
-    const requestBody = { user: userId };
+    const requestBody = { user: user._id };
     console.log("requestBody: ", requestBody);
 
     axios
@@ -110,7 +111,16 @@ function CartPage() {
 
     navigate("/orders");
   };
+ const renderDetails = () => {
+return(
+  <div>
+    <h2>You haven't placed an order with us yet! Go Shopping!</h2>
+    <Link to="/products">To Products</Link>
 
+  </div>
+)
+
+  }
   return (
     <>
       {!isLoading && (
