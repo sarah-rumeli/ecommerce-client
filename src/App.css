@@ -17,6 +17,27 @@ body {
   text-align: center;
 }
 
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+
+/* User created for Layout */
+.border-gradient {
+  border: 5px solid;
+  border-image: linear-gradient(to right, #193019f2, #278627f2, #00b536) 1;
+  border-image-slice: 1;
+  border-radius: 15px;
+  background-clip: content-box;
+}
+
+.box-bg-gradient {
+  background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
+  padding: 2em;
+  border-radius: 5px;
+  color: #fff;
+}
+
 /* CART css */
 .cart-icon {
   text-decoration: none;
@@ -41,6 +62,12 @@ body {
   z-index: 0;
   margin-left: -4px;
 }
+
+/* Footer CSS */
+.footer-link:link  { color: #00ff2a; text-decoration: none; }
+.footer-link:visited { color: #00ff2a; text-decoration: none; }
+.footer-link:hover { color: #fff; text-decoration: none; }
+.footer-link:active { color: #00ff2a; text-decoration: none; }
 
 /******* Carousel CSS *******/
 .carousel-item {
@@ -69,7 +96,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, #78ffa3cc, #21c25366);
+  background: linear-gradient(to top, #273227cc, #00b53666,  #00ff2277);
   color: white;
   display: flex;
   align-items: center;
@@ -114,26 +141,31 @@ body {
   border: none;
   outline: none;
   cursor: pointer;
-  color: rgb(66, 65, 65);
+  color: rgb(135, 134, 134);
 }
-.star{
-  
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    color: rgb(250, 159, 2);
-  }
-  .gradient-custom {
-    /* fallback for old browsers */
-    background: #f6d365;
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right bottom, rgb(240, 238, 230), rgb(96, 209, 194))
-    }
-    .product{
-      font-weight: bold;
-    }
+
+.star-text {
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.star {
+  font-size: 2em;
+  line-height: 1em;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: rgb(250, 159, 2);
+  text-shadow: 1px 1px 4px #777;
+}
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #f6d365;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+}
