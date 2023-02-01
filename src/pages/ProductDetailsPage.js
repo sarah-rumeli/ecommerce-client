@@ -110,7 +110,7 @@ function ProductDetailsPage(props) {
                 <br></br>
                 <span className="card-text">{product.user.email}</span>
                 
-                <p className="card-text" style={{ fontWeight: "bold" }}>Price :{product.price} Euro</p>
+                <p className="card-text" style={{ fontWeight: "bold" }}>Price :{product.price} &euro;</p>
                 
                 {isLoggedIn && (
                 <>
