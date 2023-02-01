@@ -116,28 +116,36 @@ function ProductDetailsPage(props) {
         <div className="m-3">
           {product && (
             <div className="row g-0">
-              <div className="col-md-3 mt-3 ms-1">
-                <img
-                  src={product.img}
-                  className="img-fluid rounded-start ratio"
-                  alt={product.name}
-                />
+              {/* Start of product details
+              <div className="card mb-3 card-product-details pink">
+                <div className="row g-0">
+                  <div className="col-md-4">
+                    <img src={product.img} className="img-fluid rounded-start" alt={product.name} />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">{product.name}</h5>
+                      <p className="card-text">{product.description}</p>
+                      <p className="card-text"><small className="text-muted">{product.category}</small></p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="col-md-5">
-                <div className="card-body ">
-                  <h5 className="card-title  ">{product.name}</h5>
-
-                  <p className="card-text fw-bold">{product.category}</p>
-                  <hr />
-                  <p className="card-text text-center">
-                    {" "}
-                    {product.description}
-                  </p>
+              End of product details */}
+              <div className="col-md-4 mt-3 ms-1">
+                <img src={product.img} className="rounded-3 ratio card-product-details-img shadow border-success" alt={product.name} />
+              </div>
+              <div className="col-md-4 p-5">
+                <div className="card-body">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="card-text"><small className="text-muted">{product.category}</small></p>
+                  <p className="card-text">{product.description}</p>
+                  
                 </div>
               </div>
               <div className="col-md-3">
                 <div className="card-body shadow card border-success mt-3 me-1">
-                  {isLoggedIn && (
+                  {isLoggedIn ? (
                     <>
                       <div className="d-flex p-2 justify-content-center">
                         <Link to={`/orders/${productId}`}>
@@ -146,10 +154,7 @@ function ProductDetailsPage(props) {
                           </button>
                         </Link>
 
-                        <button
-                          className="btn btn-success mb-3"
-                          onClick={handleSubmit}
-                        >
+                        <button className="btn btn-success mb-3" onClick={handleSubmit}>
                           Add to Cart
                         </button>
                       </div>
@@ -181,6 +186,16 @@ function ProductDetailsPage(props) {
                       </>
                       }
                       
+                    </>
+                  ) : (
+                    <>
+                      <div className="d-flex p-2 justify-content-center">
+                        <Link to={`/login`}>
+                          <button className="btn btn-success mb-3 me-3">
+                            Buy Now
+                          </button>
+                        </Link>
+                      </div>
                     </>
                   )}
                 </div>
