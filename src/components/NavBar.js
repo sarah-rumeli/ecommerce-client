@@ -27,26 +27,6 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/products">Products</Link>
             </li>
-            {!isLoggedIn && (
-              <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/signup">Sign Up</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
-              </li>
-              </>
-            )}
-            {isLoggedIn && (
-              <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/profile">My Profile</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/orders">Orders</Link>
-              </li>
-              </>
-            )}
           </ul>
           <div className="d-flex">
             <Link className="nav-item cart-icon" to="/cart">
@@ -55,18 +35,36 @@ function Navbar() {
                 <span className="cart-count">{totalQuantity}</span>
               ) : null}
             </Link>
-          {isLoggedIn && (
-            <>
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <span className="nav-link">{user && "Hello, " + user.name}</span>
-              </li>
-              <li className="nav-item">
-                <button className="nav-link btn btn-danger bg-gradient text-white" onClick={logOutUser}>Logout</button>
-              </li>
-            </ul>
-            </>
-          )}
+            
+            {!isLoggedIn ? (
+              <>
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link className="nav-link btn btn-warning bg-gradient text-black me-2" to="/signup">Sign Up</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link btn btn-success bg-gradient text-white" to="/login">Login</Link>
+                </li>
+              </ul>
+              </>
+            ) : (
+              <>
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/profile">My Profile</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/orders">Orders</Link>
+                </li>
+                <li className="nav-item">
+                  <span className="nav-link">{user && "Hello, " + user.name}</span>
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link btn btn-danger bg-gradient text-white" onClick={logOutUser}>Logout</button>
+                </li>
+              </ul>
+              </>
+            )}
           </div>
         </div>
       </div>
