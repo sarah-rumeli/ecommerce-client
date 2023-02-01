@@ -1,17 +1,47 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 function HomePage() {
+  const numProducts = 5;
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/products`)
+      .then(response => response.json())
+      .then(data => setProducts(data.slice(0, numProducts)))
+      .catch(error => console.error(error));
+  }, []);
+
+  //useEffect(() => {
+  //  $('.carousel').carousel();
+  //}, []);
+
     return (
       <div className="container-fluid">
-        <h1>Home Page</h1>
-        <p>Checking if the page scrolls like I want...</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis egestas maecenas pharetra convallis posuere. Amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Nibh tortor id aliquet lectus proin. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Velit ut tortor pretium viverra suspendisse. Tellus orci ac auctor augue. Egestas maecenas pharetra convallis posuere morbi leo. Netus et malesuada fames ac turpis egestas maecenas. Ullamcorper sit amet risus nullam eget felis eget nunc. Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at.</p>
-<p>
-Enim tortor at auctor urna nunc id cursus metus. Ipsum a arcu cursus vitae congue mauris rhoncus aenean. Dui ut ornare lectus sit amet est placerat in. Et molestie ac feugiat sed lectus vestibulum mattis. Etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Aenean vel elit scelerisque mauris pellentesque. Etiam tempor orci eu lobortis elementum nibh tellus molestie nunc. Hac habitasse platea dictumst vestibulum rhoncus. Dolor sed viverra ipsum nunc aliquet. Porttitor eget dolor morbi non arcu risus quis varius. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Integer malesuada nunc vel risus commodo viverra. Velit dignissim sodales ut eu. Arcu vitae elementum curabitur vitae nunc sed velit. Nisi porta lorem mollis aliquam ut porttitor leo a.</p>
-<p>
-Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla. Sollicitudin ac orci phasellus egestas tellus. Vivamus arcu felis bibendum ut. Justo eget magna fermentum iaculis eu non. Habitasse platea dictumst quisque sagittis. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Lorem donec massa sapien faucibus et molestie ac. Amet nisl purus in mollis nunc sed id. Non sodales neque sodales ut etiam sit amet nisl purus. A erat nam at lectus urna. Fringilla urna porttitor rhoncus dolor purus non enim praesent. Morbi leo urna molestie at elementum eu facilisis sed. Urna cursus eget nunc scelerisque viverra mauris in. Sem nulla pharetra diam sit amet nisl. Faucibus a pellentesque sit amet. Vel facilisis volutpat est velit egestas dui id ornare arcu. Amet consectetur adipiscing elit duis tristique.</p>
-<p>
-Orci phasellus egestas tellus rutrum tellus pellentesque. Id leo in vitae turpis massa. Pellentesque id nibh tortor id aliquet. Odio pellentesque diam volutpat commodo sed egestas egestas. Turpis egestas sed tempus urna et. Euismod in pellentesque massa placerat duis ultricies lacus. Est ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Euismod in pellentesque massa placerat duis ultricies lacus sed turpis. Ac tincidunt vitae semper quis lectus nulla at. Eu ultrices vitae auctor eu augue ut lectus. Diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. At urna condimentum mattis pellentesque. Augue mauris augue neque gravida in fermentum et sollicitudin ac. Congue quisque egestas diam in arcu cursus euismod quis viverra. Sapien nec sagittis aliquam malesuada bibendum. Vitae aliquet nec ullamcorper sit amet risus nullam eget. Sit amet nulla facilisi morbi. Eu scelerisque felis imperdiet proin fermentum. Lectus arcu bibendum at varius vel pharetra vel turpis. Tempor nec feugiat nisl pretium fusce id velit.</p>
-<p>
-Phasellus faucibus scelerisque eleifend donec. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Aliquam ut porttitor leo a diam sollicitudin. Suscipit tellus mauris a diam maecenas sed. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Nulla pharetra diam sit amet. Nec feugiat nisl pretium fusce id velit ut. Rhoncus urna neque viverra justo nec ultrices dui sapien eget. Metus vulputate eu scelerisque felis imperdiet. Sit amet justo donec enim diam vulputate ut pharetra. Neque aliquam vestibulum morbi blandit cursus risus at. Elementum pulvinar etiam non quam. Elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi. Convallis a cras semper auctor neque vitae tempus. Nunc scelerisque viverra mauris in aliquam sem. Metus aliquam eleifend mi in nulla posuere sollicitudin.</p>
+        <div id="ecomartsCarousel" className="carousel slide carousel-fade" data-bs-ride="carousel">
+          <div className="carousel-inner">
+            {/* Start loop here */}
+            {products.map((product, index) => (
+              <div key={product.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                
+                
+                  <div className="img-wrapper">
+                    <img src={product.img} className="d-block w-100" alt={product.name} />
+                  </div>
+                
+              </div>
+            ))}
+            {/* End loop here */}
+          </div>
+          <button className="carousel-control-prev" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button className="carousel-control-next" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
     );
   }
