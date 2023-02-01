@@ -110,6 +110,13 @@ a:active { text-decoration: none; }
   flex-wrap: wrap;
 }
 
+.card-product-details-img {
+  object-fit: cover;
+  max-height: 400px;
+  border-radius: 10px;
+  background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
+}
+
 /* For STARS in Ratings (Comments) */
 .Stars_on {
   background-color: transparent;
