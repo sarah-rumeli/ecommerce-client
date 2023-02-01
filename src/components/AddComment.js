@@ -45,9 +45,7 @@ function AddComment (props){
        
         <div className="container-fluid mb-5 mt-4">
       <div className="row justify-content-center">
-        <div className="col-7 col-lg-7 col-md-7 col-sm-7  m-3 p-5  text-dark rounded-3" 
-        style={{background: "linear-gradient(to right, #AFF1DA, #F9EA8F)", 
-         padding: "2em",  borderRadius: "5px",  color: "#fff",}}>
+        <div className="col-7 col-lg-7 col-md-7 col-sm-7 m-3 p-5 rounded-3 text-dark box-bg-gradient">
      
      <form onSubmit={handleAddComment}>
      <div className="mb-3">

@@ -26,7 +26,7 @@ function HomePage() {
                 <img src={product.img} className="d-block w-100 ratio border-3" alt={product.name} />
                 
                 <Link to={`/products/${product._id}`}>
-                  <div className="overlay">
+                  <div className="overlay text-truncate">
                     <h2>{product.name}</h2>
                   </div>
                 </Link>

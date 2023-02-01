@@ -165,11 +165,7 @@ function ProductDetailsPage(props) {
             return (
               <>
               <div className="row justify-content-center">
-              <div className="card col-10 col-lg-7 col-md-10 col-sm-10  m-3 p-5  text-dark rounded-3" style={{
-        border: '5px solid',
-        borderImage: 'linear-gradient(to right, green, lightblue) 1',
-        borderImageSlice: 1,
-        backgroundClip: 'content-box'}}>
+              <div className="card col-10 col-lg-7 col-md-10 col-sm-10 m-3 p-5 text-dark rounded-3 border-success">
               <div className="card-header" key={comment._id} >
               <h5>Rating: {[...Array(comment.rating)].map((star) => {
                   return <span className="star">&#9733;</span>
