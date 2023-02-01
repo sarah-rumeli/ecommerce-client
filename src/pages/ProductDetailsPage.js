@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { CartContext } from "../context/cart.context";
 import AddComment from "../components/AddComment";
+import EditComment from "../components/EditComment";
 
 const API_URL = "http://localhost:5005";
 
@@ -15,6 +16,8 @@ function ProductDetailsPage(props) {
     useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [comments, setComments] = useState([]);
+  const [rating, setRating] = useState(0);
+
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -90,7 +93,23 @@ function ProductDetailsPage(props) {
     };
     return date.toLocaleString("en-UK", options);
   };
+  const handleDeleteComment = (commentId) => {
+    const storedToken = localStorage.getItem("authToken");
 
+    axios
+      .delete(
+        `${process.env.REACT_APP_API_URL}/api/products/${productId}/comments/${commentId}`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
+      .then(() => {
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment._id !== commentId)
+        );
+      })
+      .catch((error) =>
+        console.log("There has been error deleting this Product: ", error)
+      );
+  };
   return (
     <>
       <div className="container-fluid">
@@ -98,15 +117,17 @@ function ProductDetailsPage(props) {
           {product && (
             <div className="row g-0">
               <div className="col-md-3 mt-3 ms-1">
-                <img src={product.img} className="img-fluid rounded-start ratio" alt={product.name} />
+                <img
+                  src={product.img}
+                  className="img-fluid rounded-start ratio"
+                  alt={product.name}
+                />
               </div>
               <div className="col-md-5">
                 <div className="card-body ">
                   <h5 className="card-title  ">{product.name}</h5>
 
-                  <p className="card-text fw-bold">
-                    {product.category}
-                  </p>
+                  <p className="card-text fw-bold">{product.category}</p>
                   <hr />
                   <p className="card-text text-center">
                     {" "}
@@ -125,15 +146,18 @@ function ProductDetailsPage(props) {
                           </button>
                         </Link>
 
-                        <button className="btn btn-success mb-3" onClick={handleSubmit}>
+                        <button
+                          className="btn btn-success mb-3"
+                          onClick={handleSubmit}
+                        >
                           Add to Cart
                         </button>
                       </div>
                       <h4 className="card-text fw-bold">
-                      {product.price} &euro;
+                        {product.price} &euro;
                       </h4>
                       <div className="text-muted small lh-1 mb-3">
-                        Created by: 
+                        Created by:
                         <div className="card-text">{product.user.name}</div>
                         <div className="card-text">{product.user.email}</div>
                       </div>
@@ -159,18 +183,23 @@ function ProductDetailsPage(props) {
           )}
 
           <Link to="/products">
-            <button className="btn btn-outline-success my-3">Back to products</button>
+            <button className="btn btn-outline-success my-3">
+              Back to products
+            </button>
           </Link>
           <AddComment productId={productId} refreshComments={getAllComments} />
+         
           {comments.map((comment) => {
             return (
-              <>
+              <>{comment &&
                 <div className="container-fluid">
                   <div className="row justify-content-center">
                     <div className="card col-10 col-lg-7 col-md-10 col-sm-10 mb-3 text-dark rounded-3 border-success m-0 p-0 shadow">
                       <div className="card-header" key={comment._id}>
                         <div className="row">
-                          <span className="col-6 text-start fw-bold">{comment.userId.name}</span>
+                          <span className="col-6 text-start fw-bold">
+                            {comment.userId.name}
+                          </span>
                           <span className="col-6 text-end">
                             {[...Array(comment.rating)].map((star) => {
                               return <span className="star">&#9733;</span>;
@@ -181,12 +210,40 @@ function ProductDetailsPage(props) {
                       <div className="card-body">
                         <h5 className="card-title">{comment.comment}</h5>
                       </div>
-                      <div className="card-footer text-end text-muted">
+
+                      <div className="card-footer text-muted d-flex justify-content-between">
+                        {isLoggedIn &&(
+                          <>
+                          {user._id === comment.userId._id &&
+                          (
+                            <div className="d-flex justify-content-between">
+                            <Link to={`/${productId}/comments/${comment._id}/edit`}>
+                              <button
+                                className="btn btn-outline-dark rounded"
+                                style={{ marginRight: "1vw" }}
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            <button
+                              className="btn btn-outline-danger rounded"
+                              onClick={() => handleDeleteComment(comment._id)}
+                            >
+                              Delete
+                            </button>
+                            </div>
+                            )
+                           
+                            }
+                            </>
+                          )
+                        }
                         <small>{formatDate(comment.createdAt)}</small>
                       </div>
                     </div>
                   </div>
                 </div>
+              }
               </>
             );
           })}

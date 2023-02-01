@@ -28,6 +28,7 @@ import CartPage from "./components/CartPage";
 import { CartProviderWrapper } from "./context/cart.context";
 import Checkout from "./components/Checkout";
 import Footer from "./components/Footer";
+import EditComment from "./components/EditComment";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/cart/checkout" element={<Checkout />} />
+          <Route path="/:productId/comments/:commentId/edit" element={<EditComment />} />
           {/* Change to a nice 404 page */}
           <Route path="*" element={<h1>404: Sorry, this route does not exist.</h1>} />
         </Routes>

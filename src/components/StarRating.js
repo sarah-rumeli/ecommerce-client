@@ -3,7 +3,7 @@ import "../App.css";
 
 function StarRating(props) {
     
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(props.rating);
    
    
         props.ratingSetter(rating);       
