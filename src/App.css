@@ -43,20 +43,44 @@ body {
 }
 
 /******* Carousel CSS *******/
+.carousel-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img, .carousel-inner > .carousel-item > img {
+.carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img, .carousel-inner > .carousel-item > Link > img {
   width: 100% !important;
-  max-height: 520px !important;
+  max-height: 450px !important;
   object-fit: cover;
 }
 @media screen and (max-width: 450px) {
-  .carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img {
+  .carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img, .carousel-inner > .carousel-item > Link > img {
     width: 100% !important;
     max-height: 200px !important;
     object-fit: cover;
   }
 }
 
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, #78ffa3cc, #21c25366);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-item:hover .overlay {
+  opacity: 1;
+}
 
 
 
