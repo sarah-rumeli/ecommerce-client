@@ -193,7 +193,7 @@ return(
                     );
                   })}
                 </div>
-                <div className="col-md-4 box-gradient align-middle text-light rounded-3">
+                <div className="col-md-4 d-flex align-items-center justify-content-center box-bg-gradient align-middle text-dark rounded-3">
                   <div>
                     <h3>Total € {totalPrice}</h3>
 
