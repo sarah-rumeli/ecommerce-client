@@ -95,6 +95,7 @@ a:active { text-decoration: none; }
   background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
   color: #fff;
 }
+
 .card-body .card-text {
   height: 3.8vw;
   overflow: hidden;
