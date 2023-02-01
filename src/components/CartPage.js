@@ -111,16 +111,7 @@ function CartPage() {
 
     navigate("/orders");
   };
- const renderDetails = () => {
-return(
-  <div>
-    <h2>You haven't placed an order with us yet! Go Shopping!</h2>
-    <Link to="/products">To Products</Link>
-
-  </div>
-)
-
-  }
+ 
   return (
     <>
       {!isLoading && (
