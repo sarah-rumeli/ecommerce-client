@@ -25,13 +25,14 @@ a:active { text-decoration: none; }
 /* User created for Layout */
 .border-gradient {
   border: 5px solid;
-  border-image: linear-gradient(to right, green, lightblue) 1;
+  border-image: linear-gradient(to right, #193019f2, #278627f2, #00b536) 1;
   border-image-slice: 1;
+  border-radius: 15px;
   background-clip: content-box;
 }
 
 .box-bg-gradient {
-  background: linear-gradient(to right, #AFF1DA, #F9EA8F);
+  background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
   padding: 2em;
   border-radius: 5px;
   color: #fff;
@@ -62,6 +63,12 @@ a:active { text-decoration: none; }
   margin-left: -4px;
 }
 
+/* Footer CSS */
+.footer-link:link  { color: #00ff2a; text-decoration: none; }
+.footer-link:visited { color: #00ff2a; text-decoration: none; }
+.footer-link:hover { color: #fff; text-decoration: none; }
+.footer-link:active { color: #00ff2a; text-decoration: none; }
+
 /******* Carousel CSS *******/
 .carousel-item {
   position: relative;
@@ -89,7 +96,7 @@ a:active { text-decoration: none; }
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, #78ffa3cc, #21c25366);
+  background: linear-gradient(to top, #273227cc, #00b53666,  #00ff2277);
   color: white;
   display: flex;
   align-items: center;
@@ -134,10 +141,15 @@ a:active { text-decoration: none; }
   border: none;
   outline: none;
   cursor: pointer;
-  color: rgb(66, 65, 65);
+  color: rgb(135, 134, 134);
 }
-.star{
-  
+
+.star-text {
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.star {
     background-color: transparent;
     border: none;
     outline: none;

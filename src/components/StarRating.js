@@ -19,7 +19,7 @@ function StarRating(props) {
             className={index <= rating ? "Stars_on" : "Stars_off"}
             onClick={() => setRating(index)}
           >     
-              <span className="">&#9733;</span>       
+              <span className="star-text">&#9733;</span>       
               </button> 
             );
           })}
