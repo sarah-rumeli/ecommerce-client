@@ -13,6 +13,20 @@ function DisplayOrderPage() {
   const [message, setMessage] = useState(undefined); 
   const navigate = useNavigate();
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return date.toLocaleString("en-UK", options);
+  };
+
+
   const getAllOrders = () => {
     const storedToken = localStorage.getItem('authToken');
     axios
@@ -94,8 +108,8 @@ return(
             <li className="list-group-item text-muted">Total Price:{order.totalPrice} &euro;</li>
             <li className="list-group-item text-muted">Notes:{order.notes}</li>
             <li className="list-group-item"><span className="product">Status:</span>{order.status}</li>
-            <li className="list-group-item text-muted">Order date:{order.createdAt}</li>
-            <li className="list-group-item text-muted">Dispatch date:{order.dispatchDate}</li>
+            <li className="list-group-item text-muted">Order date:{formatDate(order.createdAt)}</li>
+            <li className="list-group-item text-muted">Dispatch date:{formatDate(order.dispatchDate)}</li>
             </ul>
             {user.isAdmin && (
               <div className="card-body">
