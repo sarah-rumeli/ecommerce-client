@@ -42,6 +42,22 @@ body {
   margin-left: -4px;
 }
 
+/******* Carousel CSS *******/
+
+.carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img, .carousel-inner > .carousel-item > img {
+  width: 100% !important;
+  max-height: 520px !important;
+  object-fit: cover;
+}
+@media screen and (max-width: 450px) {
+  .carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img {
+    width: 100% !important;
+    max-height: 200px !important;
+    object-fit: cover;
+  }
+}
+
+
 
 
 /******* FOR TESTING ********/
