@@ -9,37 +9,52 @@ const API_URL = "http://localhost:5005";
 
 function CartPage() {
   console.log("******** CartPage.js clg**********");
-  const { isLoading } = useContext(AuthContext);
+  const { isLoading, isLoggedIn } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 
   //const [userId, setUserId] = useState(user._id);
   const [notes, setNotes] = useState("");
-  const [total, setTotalPrice] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [status, setStatus] = useState("Awaiting Payment");
   const [message, setMessage] = useState(undefined);
   const [orderId, setOrderId] = useState("");
   const navigate = useNavigate();
-  let totalQuantity = 0;
-  let totalPrice = 0;
-  useEffect(() => {
-  if (cartItems && cartItems.length > 0) {
-    
-      setProducts(cartItems[0].products);
-    
 
-    //console.log("products: ", products);
-    totalQuantity = products.reduce(
+  console.log(isLoggedIn);
+
+  const calculateTotals = (products) => {
+    setTotalQuantity(products.reduce(
       (acc, product) => acc + product.quantity,
       0
-    );
-    totalPrice = products.reduce(
+    ));
+    setTotalPrice(products.reduce(
       (acc, product) => acc + product.quantity * product.price,
       0
-    );
+    ));
+
+    return { totalQuantity, totalPrice };
+  };
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      setProducts(cartItems[0].products);
+      const { totalQuantity, totalPrice } = calculateTotals(cartItems[0].products);
+
+      //console.log("products: ", products);
+      //totalQuantity = products.reduce(
+      //  (acc, product) => acc + product.quantity,
+      //  0
+      //);
+      //totalPrice = products.reduce(
+      //  (acc, product) => acc + product.quantity * product.price,
+      //  0
+      //);
   }
 }, [cartItems[0]]);
+
   console.log("cartItems: ", cartItems);
   console.log("totalQuantity: ", totalQuantity);
 
@@ -124,17 +139,10 @@ function CartPage() {
                   {products.map((product, index) => {
                     return (
                       <>
-                        <div
-                          className="card border-success shadow mb-1"
-                          key={index}
-                        >
+                        <div className="card border-success shadow mb-1" key={index}>
                           <div className="row g-0">
                             <div className="col-md-4">
-                              <img
-                                src={product.img}
-                                className="img-fluid rounded-start"
-                                alt="Need to pull in images"
-                              />
+                              <img src={product.img} className="img-fluid rounded-start" alt={product.name} />
                             </div>
                             <div className="col-md-8">
                               <div className="card-body text-start">
@@ -145,13 +153,12 @@ function CartPage() {
                                     </h5>
                                     <p className="card-text">
                                       <small>
-                                        € {product.price} each x{" "}
-                                        {product.quantity}
+                                        € {product.price} each x{" "} {product.quantity}
                                       </small>
                                     </p>
                                   </div>
 
-                                  <div className="col-3 justify-content-end green">
+                                  <div className="col-3 d-flex align-self-start justify-content-end">
                                     <button
                                       onClick={() =>
                                         deleteCartItem(product._id)
@@ -177,7 +184,7 @@ function CartPage() {
                     );
                   })}
                 </div>
-                <div className="col-md-4 bg-dark align-middle text-light rounded-3">
+                <div className="col-md-4 box-gradient align-middle text-light rounded-3">
                   <div>
                     <h3>Total € {totalPrice}</h3>
 
@@ -192,6 +199,9 @@ function CartPage() {
                 {/* CART empty message... like the add form style... */}
                 <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
                   Oops, it looks like your cart is empty...
+                  {!isLoggedIn && (
+                    <p>You'll need to <Link to="/login" className="badge rounded-pill bg-success text-white">Login</Link> or <Link to="/signup" className="badge rounded-pill bg-warning text-dark">Sign Up</Link> to buy products</p>
+                  )}
                   <p></p>
                   <Link className="btn bg-success bg-gradient text-light" to='../products'>Get Shopping!</Link>
                 </div>
