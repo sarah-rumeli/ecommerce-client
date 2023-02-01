@@ -49,11 +49,11 @@ function AddComment(props) {
   return (
     <div className="container-fluid mb-5 mt-4">
       <div className="row justify-content-center">
-        <div className="col-10 col-sm-10 col-md-7 col-lg-7 m-3 p-5 rounded-3 text-dark box-bg-gradient">
+        <div className="col-10 col-sm-10 col-md-7 col-lg-7 m-3 p-5 rounded-3 text-dark box-bg-gradient shadow">
           <form onSubmit={handleAddComment}>
             <div className="mb-3">
-              <label className="form-label" style={{ fontWeight: "bolder" }}>
-                Comments
+              <label className="add-comment form-label fw-bolder">
+                <h3 className="text-white">Add a Comment</h3>
               </label>
               <textarea
                 className="form-control"
@@ -65,15 +65,12 @@ function AddComment(props) {
               />
             </div>
             <div className="mb-3">
-              <br></br>
-              <label className="form-label fw-bolder">
-                Rating
+              <label className="add-comment form-label fw-bolder">
+                <h3 className="text-white">Rating</h3>
               </label>
               <StarRating ratingSetter={ratingSetter} />
             </div>
-
-            <br></br>
-            <button className="btn btn-success bg-gradient text-light" type="submit">
+            <button className="btn btn-success bg-gradient text-light mt-2" type="submit">
               Add Comment
             </button>
           </form>
