@@ -64,38 +64,46 @@ return(
   return (
     <>
     {!isLoading &&
-    <div className="container-fluid">
-    {message && <p className="message">{message}</p>}
+    <div className="container-fluid text-center justify-content-center">
+    <div className="display-4">Orders</div>
+<div className="alert alert-success" role="alert">{message && <p className="message">{message}</p>}</div>
+    
     {orders.length===0 && renderDetails()}
       <div>{console.log(orders)}</div>
-
-      {orders.map((order) => {
-        return (
-          <div className="OrderCard card" key={order._id}>
-            <hr></hr>
-            <h3>Order Id : {order._id}</h3>
-            <h3>User : {order.userId.name}</h3>
-            <p>
+     
+      <div className="row justify-content-center" style ={{marginLeft:"1vw"}}>
+        {orders.map((order) => {
+          return (
+          <div className="card border-success mt-3 mx-3 p-0 col-xl-3 col-lg-3 col-md-5 col-sm-10 col-10 shadow"  key={order._id}>
+          <div className="card-header">
+            <h6>Order Id : {order._id}</h6>
+            </div>
+            <ul className="list-group list-group-flush">
+            <li className="list-group-item text-muted"> {order.userId.name} </li>
+            
+            <>
               {order.products.map((x) => {
                 return (
-                  <div>
-                    <h5>Product Name: {x.name}</h5>
-                    <h5> Quantity:{x.quantity}</h5>
+                 <div className="blue">
+                  <li className="list-group-item"><span className="product">Product Name:</span> {x.name} <br/>
+                  <span className="product"> Quantity:{x.quantity}</span></li>
                   </div>
                 );
               })}
-            </p>
-            <h3>Total Price:{order.totalPrice}</h3>
-            <p>Notes:{order.notes}</p>
-            <h5>Status:{order.status}</h5>
-            <h5>Order date:{order.createdAt}</h5>
-            <h5>Dispatch date:{order.dispatchDate}</h5>
+            </>
+            <li className="list-group-item text-muted">Total Price:{order.totalPrice} &euro;</li>
+            <li className="list-group-item text-muted">Notes:{order.notes}</li>
+            <li className="list-group-item"><span className="product">Status:</span>{order.status}</li>
+            <li className="list-group-item text-muted">Order date:{order.createdAt}</li>
+            <li className="list-group-item text-muted">Dispatch date:{order.dispatchDate}</li>
+            </ul>
             {user.isAdmin && (
-              <>
+              <div className="card-body">
                 {order.status !== "Delivered" ? (
                   <>
                   <Link to={`/orders/edit/${order._id}`}>
-                      <button>Edit Order</button>
+                      <button type ="submit" className="btn btn-outline-dark rounded"
+                                style={{ marginRight: "1vw" }}>Edit Order</button>
                     </Link>
                   </>
                 ) : (
@@ -105,16 +113,16 @@ return(
                   order.status !== "Dispatched" ? (
                     <>
                     
-                    <button onClick={() => deleteOrder(order._id)}>Delete Order </button>
+                    <button className="btn btn-outline-danger rounded" onClick={() => deleteOrder(order._id)}>Delete Order </button>
  
                     </>
                   ) : (
-                    " Expect to receive soon"
+                    " Expect to receive soon!"
                   )
                 ) : (
                   "Thanks for shopping with us!!"
                 )}
-              </>
+              </div>
             )}
 
             {!user.isAdmin && (
@@ -122,7 +130,7 @@ return(
                 {order.status === "Awaiting Payment" ? (
                   <>
                  
-                  <button onClick={() => deleteOrder(order._id)}>Cancel Order </button>
+                  <button   className="btn btn-outline-danger rounded" onClick={() => deleteOrder(order._id)}>Cancel Order </button>
                    
                   </>
                 ) : (
@@ -133,6 +141,7 @@ return(
           </div>
         );
       })}
+    </div>
     </div>
     
     }

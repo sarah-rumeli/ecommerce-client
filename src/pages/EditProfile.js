@@ -21,8 +21,7 @@ function EditProfile(props) {
   const { profileId } = useParams();
   const navigate = useNavigate();
 
-  removeToken();
-  
+ 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/auth/profile/${profileId}`
@@ -38,6 +37,7 @@ function EditProfile(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    removeToken();
     // Create an object representing the body of the PUT request
     const requestBody = { name, address, email };
 
@@ -64,7 +64,7 @@ function EditProfile(props) {
   };
 
   return (
-    <div style ={{width:"60%",marginLeft:"20vw"}}>
+    <div style ={{width:"50%",marginLeft:"25vw"}}>
       <h3>Edit Profile</h3>
 
       <form onSubmit={handleFormSubmit}>

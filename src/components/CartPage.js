@@ -27,9 +27,10 @@ function CartPage() {
   if (cartItems && cartItems.length > 0) {
     
       setProducts(cartItems[0].products);
-    
+    }
+  }, [cartItems[0]]);
 
-    //console.log("products: ", products);
+    console.log("products: ", products);
     totalQuantity = products.reduce(
       (acc, product) => acc + product.quantity,
       0
@@ -38,8 +39,7 @@ function CartPage() {
       (acc, product) => acc + product.quantity * product.price,
       0
     );
-  }
-}, [cartItems[0]]);
+
   console.log("cartItems: ", cartItems);
   console.log("totalQuantity: ", totalQuantity);
 
@@ -111,16 +111,7 @@ function CartPage() {
 
     navigate("/orders");
   };
- const renderDetails = () => {
-return(
-  <div>
-    <h2>You haven't placed an order with us yet! Go Shopping!</h2>
-    <Link to="/products">To Products</Link>
 
-  </div>
-)
-
-  }
   return (
     <>
       {!isLoading && (
