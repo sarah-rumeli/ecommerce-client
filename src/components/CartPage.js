@@ -17,6 +17,7 @@ function CartPage() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [message, setMessage] = useState(undefined);
   const { removeFromCart } = useContext(CartContext);
+  const { emptyCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const calculateTotals = (products) => {
@@ -80,6 +81,7 @@ function CartPage() {
           status: "Awaiting Payment",
           totalPrice: total,
         };
+        emptyCart();
         return axios.post(
           `${process.env.REACT_APP_API_URL}/api/orders`,
           cartToOrder,
