@@ -138,11 +138,15 @@ function EditProductPage(props) {
         >
         <option value="">Select a category</option>
           <option value="Cleaning">Cleaning</option>
+          <option value="Eco Fertilizers">Eco Fertilizers</option>
+          <option value="Garden">Garden</option>
+          <option value="Lifestyle">Lifestyle</option>
           <option value="Organic Products">Organic Products</option>
+          <option value="Outdoors">Outdoors</option>
+          <option value="Portable Power">Portable Power</option>
           <option value="Reclaimed Textiles">Reclaimed Textiles</option>
           <option value="Refurbished Electronics">Refurbished Electronics</option>
           <option value="Water Conservation">Water Conservation</option>
-          <option value="Eco Fertilizers">Eco Fertilizers</option>
         </select>
         </div>
         <div className="mb-3">
