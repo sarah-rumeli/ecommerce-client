@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
  
 function EditProductPage(props) {
   const [name, setName] = useState("");
@@ -8,8 +9,48 @@ function EditProductPage(props) {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
+
+  const [imgIsLoading, setImgIsLoading] = useState(false);
+  const [uploadImg, setUploadImg] = useState("");//to hold form data object from user image upload
+
+  const { isLoggedIn, isLoading, user, authenticateUser } =
+    useContext(AuthContext);
+
   const {productId} = useParams();
   const navigate = useNavigate();
+
+   ///////////////////////upload image ///////////////////////
+
+   const handleFileUpload = (e) => {  
+    const file = e.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append("img", file);
+    setUploadImg(uploadData);
+  };
+  const uploadImage = (uploadImg) => {
+    setImgIsLoading(true);
+    console.log("uploading.",uploadImg);
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/api/products/upload`, uploadImg)
+      .then((response) => {
+        //console.log("response is: ", response.data.fileUrl);
+        // response carries "fileUrl" which we can use to update the state
+        setImg(response.data.fileUrl);       
+        setImgIsLoading(false);
+      })
+      .catch((err) => console.log("Error while uploading the file: ", err));
+      
+    
+  };
+
+  useEffect(() => {
+    
+    
+    uploadImage(uploadImg);
+    
+    
+  }, [uploadImg]);
+  ///////////////////////upload image ///////////////////////
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -51,36 +92,46 @@ function EditProductPage(props) {
   }
 
   return (
-    <div className="EditProductPage">
+    <div className="editproduct">
+    <div className="text-white editpage">
+      <div className="text-white">
+        <div className="text-white m-3 p-5 bg-dark box-bg-gradient rounded-3">
       <h3>Edit the Product</h3>
-
       <form onSubmit={handleSubmit}>
-        <label>Name *:</label>
+      <div className="mb-3">
+        <label className="form-label">Name *:</label>
         <input
+         className="form-control"
           type="text"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
- 
-        <label>Description *:</label>
+  </div>
+  <div className="mb-3">
+        <label className="form-label">Description *:</label>
         <textarea
+        className="form-control"
           type="text"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-
-        <label>Price *:</label>
+   </div>
+   <div className="mb-3">
+        <label className="form-label">Price *:</label>
         <input
+        className="form-control"
           type="number"
           name="price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
-
-        <label>Category *:
+ </div>
+ <div className="mb-3">
+        <label className="form-label">Category *: </label>
         <select
+        className="form-control"
          name="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -92,20 +143,24 @@ function EditProductPage(props) {
           <option value="Water Conservation">Water Conservation</option>
           <option value="Eco Fertilizers">Eco Fertilizers</option>
         </select>
-      </label>
-
-      <label>Image:</label>
-        <input
-          type="text"
+        </div>
+        <div className="mb-3">
+      <label className="form-label" style ={{marginRight:"1vw"}}> Current Image:</label>
+      <img src ={img} alt = "currentpic" className="editimg"/>
+        <input className="form-control"
+         type="file"
           name="img"
-          value={img}
-          onChange={(e) => setImg(e.target.value)}
+         
+          onChange={(e) => handleFileUpload(e)}
+          style ={{marginTop:"1vw"}}
         />
- 
-      <button type="submit">Submit</button>
+  </div>
+      <button className="btn bg-success bg-gradient text-light" type="submit">Submit</button>
       </form>
-
-      <button onClick={deleteProduct}>Delete Product</button>
+      </div>
+      </div>
+      <button className="btn btn-outline-danger rounded btn-sm deletebtn" onClick={deleteProduct}>Delete Product</button>
+    </div>
     </div>
   );
 }
