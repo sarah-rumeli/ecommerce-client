@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 
 function StarRating(props) {     
+  const [hover, setHover] = useState(0);
     
     return (
         <div className="star-rating">
@@ -11,10 +12,12 @@ function StarRating(props) {
                 <button 
             type="button"
             key={index}
-            className={index <= props.rating ? "Stars_on" : "Stars_off"}
+            className={index <= (hover || props.rating)? "Stars_on" : "Stars_off"}
             onClick={() => {
               props.ratingSetter(index);
               }}
+            onMouseEnter={() => setHover(index)}
+            onMouseLeave={() => setHover(props.rating)}
           >     
               <span className="star-text">&#9733;</span>       
               </button> 
