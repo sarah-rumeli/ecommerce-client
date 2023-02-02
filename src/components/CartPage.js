@@ -153,7 +153,7 @@ function CartPage() {
                 <div className="col-md-4 d-flex align-items-center justify-content-center text-white rounded-3">
                   <div className="w-100 box-bg-gradient">
                     <h3>Total € {totalPrice}</h3>
-                    <button className="btn btn-success shadow mb-3" type="submit" onClick={handleCheckout}>
+                    <button className="btn btn-outline-success bg-white text-dark shadow mb-3" type="submit" onClick={handleCheckout}>
                       Checkout
                     </button>
                   </div>
