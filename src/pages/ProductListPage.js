@@ -69,7 +69,7 @@ function ProductListPage() {
                 )}
                 <div className="card-body">
                   <h4 className="text-success lh-base text-truncate">{product.name}</h4>
-                  <p className="card-text">
+                  <p className="card-text text-truncate">
                     {product.description}
                   </p>
                 </div>

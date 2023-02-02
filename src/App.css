@@ -95,12 +95,12 @@ a:active { text-decoration: none; }
   background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
   color: #fff;
 }
-
+/*
 .card-body .card-text {
   height: 3.8vw;
   overflow: hidden;
 }
-
+*/
 .card-products {
   width: 18rem !important;
 }
@@ -114,6 +114,17 @@ a:active { text-decoration: none; }
   object-fit: cover;
   max-height: 400px;
   border-radius: 10px;
+  background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
+}
+
+.card-cart {
+  max-height: 20vh;
+}
+
+.card-cart-img {
+  object-fit: contain;
+  max-height: 30vh;
+  max-width: 30vw;
   background: linear-gradient(to top, #193019f2, #278627f2, #00b536);
 }
 

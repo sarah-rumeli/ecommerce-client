@@ -13,17 +13,11 @@ function CartPage() {
   const { cartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
-
-  //const [userId, setUserId] = useState(user._id);
-  const [notes, setNotes] = useState("");
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [status, setStatus] = useState("Awaiting Payment");
   const [message, setMessage] = useState(undefined);
-  const [orderId, setOrderId] = useState("");
+  const { removeFromCart } = useContext(CartContext);
   const navigate = useNavigate();
-
-  console.log(isLoggedIn);
 
   const calculateTotals = (products) => {
     setTotalQuantity(products.reduce(
@@ -34,7 +28,6 @@ function CartPage() {
       (acc, product) => acc + product.quantity * product.price,
       0
     ));
-
     return { totalQuantity, totalPrice };
   };
 
@@ -42,27 +35,12 @@ function CartPage() {
     if (cartItems && cartItems.length > 0) {
       setProducts(cartItems[0].products);
       const { totalQuantity, totalPrice } = calculateTotals(cartItems[0].products);
-
-      //console.log("products: ", products);
-      //totalQuantity = products.reduce(
-      //  (acc, product) => acc + product.quantity,
-      //  0
-      //);
-      //totalPrice = products.reduce(
-      //  (acc, product) => acc + product.quantity * product.price,
-      //  0
-      //);
-  }
-}, [cartItems[0]]);
-
-  console.log("cartItems: ", cartItems);
-  console.log("totalQuantity: ", totalQuantity);
+    }
+  }, [cartItems[0]]);
 
   const deleteCartItem = (productId) => {
-    console.log("delete item from cart");
     const storedToken = localStorage.getItem("authToken");
     const requestBody = { user: user._id };
-    console.log("requestBody: ", requestBody);
 
     axios
       .delete(`${process.env.REACT_APP_API_URL}/api/cart/${productId}`, {
@@ -75,13 +53,9 @@ function CartPage() {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product._id !== productId)
         );
-        console.log("cartItems[0].products: ", cartItems[0].products);
+        removeFromCart(productId);
       })
-      .catch((error) =>
-        console.log(
-          "There has been error deleting this Product from the Cart: ",
-          error
-        )
+      .catch((error) => console.log("There has been error deleting this Product from the Cart: ", error)
       );
   };
 
@@ -96,7 +70,6 @@ function CartPage() {
       })
       .then((response) => {
         const cart = response.data[0];
-        console.log("to be ordered", cart);
         const total = cart.products.reduce(
           (acc, product) => acc + product.quantity * product.price,
           0
@@ -114,8 +87,7 @@ function CartPage() {
         );
       })
       .then((responseFromOrder) => {
-        console.log(responseFromOrder);
-
+        //console.log(responseFromOrder);
         return axios.delete(
           `${process.env.REACT_APP_API_URL}/api/cart/remove/${user._id}`,
           { headers: { Authorization: `Bearer ${storedToken}` } }
@@ -139,40 +111,32 @@ function CartPage() {
                   {products.map((product, index) => {
                     return (
                       <>
-                        <div className="card border-success shadow mb-1" key={index}>
+                        <div className="card card-cart border-success shadow mb-2 overflow-hidden" key={index}>
                           <div className="row g-0">
                             <div className="col-md-4">
-                              <img src={product.img} className="img-fluid rounded-start" alt={product.name} />
+                              <Link to={`/products/${product._id}`}>
+                                <img src={product.img} className="rounded-start card-img-top" alt={product.name} />
+                              </Link>
                             </div>
                             <div className="col-md-8">
                               <div className="card-body text-start">
                                 <div className="row">
                                   <div className="col-9">
-                                    <h5 className="card-title">
-                                      {product.name}{" "}
-                                    </h5>
+                                    <h5 className="card-title text-truncate lh-base">{product.name}</h5>
                                     <p className="card-text">
-                                      <small>
-                                        € {product.price} each x{" "} {product.quantity}
-                                      </small>
+                                      <small>{product.price} &euro; each x {product.quantity}</small>
                                     </p>
                                   </div>
 
                                   <div className="col-3 d-flex align-self-start justify-content-end">
-                                    <button
-                                      onClick={() =>
-                                        deleteCartItem(product._id)
-                                      }
-                                      className="btn btn-danger bg-gradient btn-sm"
-                                    >
+                                    <button onClick={() => deleteCartItem(product._id)} className="btn btn-danger bg-gradient btn-sm">
                                       x
                                     </button>
                                   </div>
                                 </div>
-                                <div className="row rounded-3 justify-content-end">
-                                  <div className="btn btn-success bg-gradient w-50 pe-none">
-                                    Sub-Total: €{" "}
-                                    {product.price * product.quantity}
+                                <div className="row rounded-3 justify-content-end me-1">
+                                  <div className="btn btn-outline-success bg-gradient w-50 pe-none">
+                                    Sub-Total: {product.price * product.quantity} &euro;
                                   </div>
                                 </div>
                               </div>
@@ -184,11 +148,10 @@ function CartPage() {
                     );
                   })}
                 </div>
-                <div className="col-md-4 d-flex align-items-center justify-content-center box-bg-gradient align-middle text-dark rounded-3">
-                  <div>
+                <div className="col-md-4 d-flex align-items-center justify-content-center text-white rounded-3">
+                  <div className="w-100 box-bg-gradient">
                     <h3>Total € {totalPrice}</h3>
-
-                    <button className="btn btn-secondary mb-3" type="submit" onClick={handleCheckout}>
+                    <button className="btn btn-success shadow mb-3" type="submit" onClick={handleCheckout}>
                       Checkout
                     </button>
                   </div>
@@ -196,9 +159,10 @@ function CartPage() {
               </>
             ) : (
               <>
-                {/* CART empty message... like the add form style... */}
+                {/* CART empty message... */}
                 <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
                   Oops, it looks like your cart is empty...
+                  {/* Not Logged In message... */}
                   {!isLoggedIn && (
                     <p>You'll need to <Link to="/login" className="badge rounded-pill bg-success text-white">Login</Link> or <Link to="/signup" className="badge rounded-pill bg-warning text-dark">Sign Up</Link> to buy products</p>
                   )}

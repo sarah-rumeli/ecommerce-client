@@ -116,22 +116,6 @@ function ProductDetailsPage(props) {
         <div className="m-3">
           {product && (
             <div className="row g-0">
-              {/* Start of product details
-              <div className="card mb-3 card-product-details pink">
-                <div className="row g-0">
-                  <div className="col-md-4">
-                    <img src={product.img} className="img-fluid rounded-start" alt={product.name} />
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">{product.name}</h5>
-                      <p className="card-text">{product.description}</p>
-                      <p className="card-text"><small className="text-muted">{product.category}</small></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              End of product details */}
               <div className="col-md-4 mt-3 ms-1">
                 <img src={product.img} className="rounded-3 ratio card-product-details-img shadow border-success" alt={product.name} />
               </div>

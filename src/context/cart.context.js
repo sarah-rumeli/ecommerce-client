@@ -9,9 +9,6 @@ export const CartContext = createContext();
 function CartProviderWrapper({ children }) {
   const storedToken = localStorage.getItem("authToken");
   const { user } = useContext(AuthContext);
-  //if (user) {
-  //  console.log("user._id: ", user._id);
-  //}
   const [cartItems, setCartItems] = useState({
     _id: "",
     name: "",
@@ -32,45 +29,39 @@ function CartProviderWrapper({ children }) {
   }, [user]);
 
   function addToCart(item) {
-    //console.log("item: ", item);
-  
     if (!item) {
-      //console.log('item undefined');
+      // item not passed, will return 'undefined'
+      return;
     } else {
-      const { name, _id, price, quantity = 1 } = item.product;
-      const newProduct = { name, _id, price, quantity };
-
-      console.log("addToCart product: ", newProduct);
-
+      const { name, _id, price, quantity = 1, img } = item.product;
+      const newProduct = { name, _id, price, quantity, img };
       const { products } = cartItems[0];
-      console.log("cartItems? ", cartItems);
-      console.log("products from cartItems? ", products);
-      //console.log(typeof products);
+      const [existingCart] = cartItems;
       const existingProduct = products.find((product) => product._id === _id);
-      //console.log('existingProduct: ', existingProduct);
       if (existingProduct) {
-        existingProduct.quantity += 1;
-        console.log("from context", cartItems);
+        existingProduct.quantity += 1; // Product exists, increment quantity...
         setCartItems([...cartItems]);
       } else {
-        const { products } = cartItems[0];
-        console.log('inside the else');
-        /*setCartItems((prevCartItems) => {
-              [...prevCartItems,{ products:{_id:_id,name:name, price:price,quantity:1}}];
-              })*/
-              
-        setCartItems( 
-          [
-          ...cartItems,
-          { products: { _id: _id, name: name, price: price, quantity: 1 } },
-          ]
-        );
+        setCartItems([
+          {
+            ...existingCart,
+            products: [...existingCart.products, newProduct],
+          },
+        ]);
       }
     }
   }
 
-  function removeFromCart(item) {
-    setCartItems(cartItems.filter((i) => i !== item));
+  function removeFromCart(productId) {
+    const { products } = cartItems[0];
+    if (!productId) {
+      // item not passed, will return 'undefined'
+      return;
+    } else {
+      const existingProduct = products.find((product) => product._id === productId);
+      const updatedCart = cartItems[0].products.filter((product) => product._id !== productId);
+      setCartItems([{ ...cartItems[0], products: updatedCart}]);
+    }
   }
 
   return (
@@ -81,32 +72,3 @@ function CartProviderWrapper({ children }) {
 }
 
 export { CartProviderWrapper };
-
-
-/*
-
-cartItems = [{}, {}] // cartItems = cartItems[0].products
-
-setCartItems((prevCart) => {
-  const newCart = [...prevCart]
-
-  if (products exists) {
-    existingProduct += 1
-    return newCart
-  } else {
-    
-    return [...newCart, newProduct]
-  }
-
-})
-
-cartItems = { products: [{}, {}]}
-setCartItems(prevCart => {
-          const newCart = [...prevCart]
-
-          newCart[0].products = [...newCart[0].products, newProduct]
-        
-          return newCart
-        }
-
-*/ 
