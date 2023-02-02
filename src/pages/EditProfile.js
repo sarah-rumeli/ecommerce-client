@@ -63,7 +63,7 @@ function EditProfile(props) {
   return (
     <div className="container-fluid">
       <div className="row justify-content-center">
-        <h3 className="header mt-4 w-50">Edit your Profile</h3>
+        <h3 className="header mt-4 mb-5 w-50">Edit your Profile</h3>
         <div className="text-dark m-3 p-3 card border-success rounded-3 w-75">
 
               <form onSubmit={handleFormSubmit}>

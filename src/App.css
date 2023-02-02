@@ -41,6 +41,15 @@ h3.header {
 
 }
 
+.error-message {
+  border: 1px solid #cc0000;
+  padding: 1rem;
+  margin: 0 0 1rem 0;
+  border-radius: 15px;
+  color: #cc0000;
+  width: 50vw;
+}
+
 /* Homepage Carousel */
 .carousel-item {
   position: relative;

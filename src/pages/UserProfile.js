@@ -28,7 +28,7 @@ function UserProfile() {
           <span class="visually-hidden">Loading...</span>
         </div>
       ) : (
-        <div className="container-fluid">
+        <div className="container-fluid mt-3 mb-5 text-center">
           <div className="row justify-content-center">
             <h3 className="header mt-4 w-50">Your Profile</h3>
             <div className="text-dark m-3 p-3 card border-success rounded-3 w-75">
