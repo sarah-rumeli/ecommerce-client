@@ -214,7 +214,7 @@ h1.cart-header {
   color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 5px;
-  margin-left: -0.3rem;
+  margin-left: -0.1rem;
   z-index: 1;
 }
 
@@ -225,6 +225,15 @@ h3.pop-text-heading {
   transform: skewX(-20deg);
   color: #fff;
   text-shadow: 0 2px 5px #464646;
+}
+
+.pop-text-heading-no-bg {
+  position: absolute;
+  margin-top: -1.5rem;;
+  width: 18rem;
+  color: #fff;
+  z-index: 1;
+  background: #ffffff;
 }
 
 .pop-card h3.pop-text-heading {

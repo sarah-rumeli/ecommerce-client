@@ -56,18 +56,18 @@ function ProductListPage() {
             return (
               <Link to={`/products/${product._id}`} className="pop-card image-box">
               <div className="card-products border-success mt-0 mx-0 p-0" key={product._id}>
-                <h3 className="pop-text-heading lh-base text-truncate">{product.name}</h3>
+                <h3 className="pop-text-heading fs-5 lh-base text-truncate">{product.name}</h3>
                 
                 {product.img ? (
                     <img src={product.img} className="card-img-top card-img-top-bg-gradient m-0" />
                 ) : (
                     <img src="https://res.cloudinary.com/dsw3axyzs/image/upload/v1673616382/lifehack-project/alzqyx6cfvtlys1lxegz.jpg" className="card-img-top ml-0 p-0" />
                 )}
-                <span className="col-6 text-end">
+                <div className="pop-text-heading-no-bg">
                   {[...Array(product.rating)].map((star) => {
                     return <span className="stars-sml">&#9733;</span>;
                   })}
-                </span>
+                </div>
               </div>
               </Link>
             );
