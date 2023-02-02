@@ -47,9 +47,7 @@ function ProductDetailsPage(props) {
       )
       .then((response) => {
         // variable that filters array
-
-        console.log("response for hsky", response.data);
-        setComments(response.data);
+            setComments(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -64,16 +62,17 @@ function ProductDetailsPage(props) {
     if (!user) {
       return;
     }
+
     const requestBody = { user: user._id, product };
-    //console.log("requestBody: ", requestBody);
-    //console.log("product: ", product);
+   
+    
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
-        //console.log("response: ", response);
+      
         // update the cartItems state in the component
         const { cart } = response.data;
-        //console.log("PRODUCT DETAILS: {cart}", cart);
+       
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
         // has been added to the cart we navigate back here
@@ -219,7 +218,7 @@ function ProductDetailsPage(props) {
                       <div className="card-footer text-muted d-flex justify-content-between">
                         {isLoggedIn &&(
                           <>
-                          {user._id === comment.userId._id &&
+                          {user._id === comment.userId._id ?
                           (
                             <div className="d-flex justify-content-between">
                             <Link to={`/${productId}/comments/${comment._id}/edit`}>
@@ -237,9 +236,33 @@ function ProductDetailsPage(props) {
                               Delete
                             </button>
                             </div>
-                            )
+                            ) : (user.isAdmin &&
+                              
+                                <div className="d-flex justify-content-between">
+                            <Link to={`/${productId}/comments/${comment._id}/edit`}>
+                              <button
+                                className="btn btn-outline-dark rounded"
+                                style={{ marginRight: "1vw" }}
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            <button
+                              className="btn btn-outline-danger rounded"
+                              onClick={() => handleDeleteComment(comment._id)}
+                            >
+                              Delete
+                            </button>
+                            </div>
+                                
+                             
+                            
+
+                            ) 
+                          }
+
                            
-                            }
+                            
                             </>
                           )
                         }

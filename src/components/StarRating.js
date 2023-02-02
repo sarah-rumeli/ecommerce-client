@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 
-function StarRating(props) {
-    
-    const [rating, setRating] = useState(props.rating);
-   
-   
-        props.ratingSetter(rating);       
+function StarRating(props) {     
     
     return (
         <div className="star-rating">
@@ -16,8 +11,10 @@ function StarRating(props) {
                 <button 
             type="button"
             key={index}
-            className={index <= rating ? "Stars_on" : "Stars_off"}
-            onClick={() => setRating(index)}
+            className={index <= props.rating ? "Stars_on" : "Stars_off"}
+            onClick={() => {
+              props.ratingSetter(index);
+              }}
           >     
               <span className="star-text">&#9733;</span>       
               </button> 

@@ -40,7 +40,7 @@ function DisplayOrderPage() {
           ordersToDisplay = response.data;
         } else {
           ordersToDisplay = response.data.filter((responseFromDb) => {
-            console.log(responseFromDb);
+           
             return responseFromDb.userId._id.includes(user._id);
           });
         

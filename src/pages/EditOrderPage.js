@@ -49,8 +49,8 @@ const handleSubmit = (e) => {
   return (
     <div className="container-fluid mb-5 mt-4">
     <div className="row justify-content-center">
-        <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
-      <h3>Edit the Order</h3>
+        <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-dark m-3 p-5 border-gradient rounded-3">
+      <h3>Edit Orders</h3>
 
       <form onSubmit={handleSubmit}>
       <div className="mb-3">

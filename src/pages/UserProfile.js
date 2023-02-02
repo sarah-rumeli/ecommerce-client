@@ -24,8 +24,8 @@ function UserProfile() {
   return (
     <>
       {isLoading ? (
-        <div class="spinner-border text-success" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border text-success" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
         <div className="profileDetails">
@@ -49,7 +49,7 @@ function UserProfile() {
                         <img
                           src="https://res.cloudinary.com/dq4j6xfee/image/upload/v1675019968/ecommerce/ywin8hopopdpju0askr3.jpg"
                           alt="Avatar"
-                          class="img-fluid my-5"
+                          className="img-fluid my-5"
                           style={{ width: "80px" }}
                         />
                         <h4> {user.name}</h4>
@@ -71,31 +71,11 @@ function UserProfile() {
                               <p className="text-muted">{user.address}</p>
                             </div>
                           </div>
-
-                          {/* <h6>Status </h6>
-                          <hr className="mt-0 mb-4" />
-                          <div className="row pt-1">
-                            <div
-                              className="col-6 mb-3"
-                              style={{ textAlign: "center", marginLeft: "6vw" }}
-                            >
-                              <h6 style={{ textAlign: "center" }}>
-                                {" "}
-                                Admin:
-                                {user.isAdmin === false ? (
-                                  <h5 className="text-muted">false</h5>
-                                ) : (
-                                  <h5 className="text-muted">true</h5>
-                                )}
-                              </h6> */}
-                            {/* </div>
-                          </div> */}
-
-                          <div className="d-flex justify-content-center">
+                           <div className="d-flex justify-content-center">
                             <Link to={`/profile/edit/${user._id}`}>
                               <button
                                 className="btn btn-outline-dark rounded"
-                                style={{ marginRight: "1vw" }}
+                                style={{marginRight: "1vw"}}
                               >
                                 Edit Profile
                               </button>
