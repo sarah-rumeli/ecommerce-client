@@ -15,13 +15,13 @@ function AuthProviderWrapper(props) {
   const navigate = useNavigate();
 
   const storeToken = (token) => {
-    //  <==  ADD
+    
     localStorage.setItem("authToken", token);
-    console.log("token in auth context", token);
+    
   };
 
   const authenticateUser = () => {
-    //  <==  ADD
+  
     // Get the stored token from the localStorage
     const storedToken = localStorage.getItem("authToken");
 
@@ -58,13 +58,13 @@ function AuthProviderWrapper(props) {
   };
 
   const removeToken = () => {
-    // <== ADD
+  
     // Upon logout, remove the token from the localStorage
     localStorage.removeItem("authToken");
   };
 
   const logOutUser = () => {
-    // <== ADD
+ 
     // To log out the user, remove the token
     removeToken();
     // and update the state variables

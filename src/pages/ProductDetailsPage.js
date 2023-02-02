@@ -38,6 +38,7 @@ function ProductDetailsPage(props) {
 
   const getAllComments = () => {
    
+   
     const storedToken = localStorage.getItem("authToken");
     axios
       .get(
@@ -71,14 +72,18 @@ function ProductDetailsPage(props) {
       return;
     }
 
+
     const requestBody = { user: user._id, product };
+       
        
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
       
+      
         // update the cartItems state in the component
         const { cart } = response.data;
+       
        
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
@@ -174,7 +179,7 @@ function ProductDetailsPage(props) {
                         </Link>
                         </>
                       ) : <>
-                       {user.isAdmin && (
+                      {user.isAdmin && (
                         <Link to={`/products/edit/${productId}`}>
                           <button className="btn btn-outline-success mb-3">
                             Edit Product
@@ -206,7 +211,7 @@ function ProductDetailsPage(props) {
               Back to products
             </button>
           </Link>
-          <AddComment productId={productId} refreshComments={getAllComments} />
+          <AddComment productId={productId} refreshComments={getAllComments} refreshProduct={getProduct} />
          
           {comments.map((comment) => {
             return (
@@ -219,11 +224,13 @@ function ProductDetailsPage(props) {
                           <span className="col-6 text-start fw-bold">
                             {comment.userId.name}
                           </span>
+                           {/* new div added for the stars*/}
                           <span className="col-6 text-end">
                             {[...Array(comment.rating)].map((star) => {
                               return <span className="star">&#9733;</span>;
                             })}
                           </span>
+                           {/* new div added for the stars*/}
                         </div>
                       </div>
                       <div className="card-body">
@@ -231,9 +238,9 @@ function ProductDetailsPage(props) {
                       </div>
 
                       <div className="card-footer text-muted d-flex justify-content-between">
-                        {isLoggedIn && (
+                        {isLoggedIn &&(
                           <>
-                          {user._id === comment.userId._id &&
+                          {user._id === comment.userId._id ?
                           (
                             <div className="d-flex justify-content-between">
                             <Link to={`/${productId}/comments/${comment._id}/edit`}>
@@ -245,9 +252,22 @@ function ProductDetailsPage(props) {
                               Delete
                             </button>
                             </div>
-                          )}
+                            ) : (user.isAdmin &&
+                              <div className="d-flex justify-content-between">
+                                <Link to={`/${productId}/comments/${comment._id}/edit`}>
+                                  <button className="btn btn-outline-dark rounded" style={{ marginRight: "1vw" }}>
+                                    Edit
+                                  </button>
+                                </Link>
+                                <button className="btn btn-outline-danger rounded" onClick={() => handleDeleteComment(comment._id)}>
+                                  Delete
+                                </button>
+                              </div>
+                            ) 
+                          }
                           </>
-                        )}
+                          )
+                        }
                         <small>{formatDate(comment.createdAt)}</small>
                       </div>
                     </div>

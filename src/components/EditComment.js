@@ -13,8 +13,7 @@ function EditComment() {
   const {commentId} = useParams();
   const {productId} = useParams();
   const navigate = useNavigate();
-console.log("comments", commentId);
-console.log("products",productId);
+
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -22,7 +21,7 @@ console.log("products",productId);
     axios
     .get(`${process.env.REACT_APP_API_URL}/api/products/${productId}/comments/${commentId}`, { headers: {Authorization: `Bearer ${storedToken}`} })
     .then((response) => {
-        console.log("response from comment;",response.data)
+       
         const oneComment = response.data;
         setComment(oneComment.comment);
         setRating(oneComment.rating);
@@ -31,8 +30,7 @@ console.log("products",productId);
     .catch((error) => console.log("There has been error retrieving comment Details: ", error));
   }, []);
 
-console.log("rating:",rating);
-console.log("comment:",comment);
+
 
   const handleEditComment = (e) => {
     e.preventDefault();

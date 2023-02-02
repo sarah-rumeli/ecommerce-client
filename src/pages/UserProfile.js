@@ -24,8 +24,8 @@ function UserProfile() {
   return (
     <>
       {isLoading ? (
-        <div class="spinner-border text-success" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border text-success" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
         <div className="container-fluid mt-3 mb-5 text-center">

@@ -17,9 +17,7 @@ function AddOrder(props) {
   const [message, setMessage] = useState(undefined); 
  // const [orderDate, setOrderDate] = useState(new Date());
   const {productId} = useParams();
-  console.log(productId);
-  //const {userId} = user._id;
-  console.log('userId: ', userId);
+
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -53,7 +51,7 @@ function AddOrder(props) {
         setStatus("");
        
 
-        //props.refreshOrder();
+    
       })
       .catch((error) => console.log(error));
   };

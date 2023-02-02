@@ -41,22 +41,26 @@ function App() {
 
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<IsPrivate> {" "}<UserProfile />{" "} </IsPrivate>} />
+          <Route path="/profile" element={<IsPrivate><UserProfile /></IsPrivate>} />
           <Route path="/profile/edit/:profileId" element={<EditProfile />} />
           <Route path="/profile/delete/:profileId" element={<EditProfile />} />
 
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:productId" element={<ProductDetailsPage />} />
-          <Route path="/products/edit/:productId" element={<IsPrivate> {" "} <EditProductPage /> {" "} </IsPrivate>} />
-          <Route path="/orders/:productId" element={<IsPrivate> {" "} <AddOrder /> {" "} </IsPrivate>} />
+          <Route path="/products/edit/:productId" element={<IsPrivate><EditProductPage /></IsPrivate>} />
 
-          <Route path="/orders" element={<IsPrivate> {" "} <DisplayOrderPage />{" "} </IsPrivate>} />
-          <Route path="/orders/edit/:orderId" element={<IsPrivate> {" "}  <EditOrderPage />{" "} </IsPrivate>} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/cart/checkout" element={<Checkout />} />
-          <Route path="/:productId/comments/:commentId/edit" element={<EditComment />} />
+          <Route path="/orders/:productId" element={<IsPrivate><AddOrder /></IsPrivate>} />
+          <Route path="/orders" element={<IsPrivate><DisplayOrderPage /></IsPrivate>} />
+          <Route path="/orders/edit/:orderId" element={<IsPrivate><EditOrderPage /></IsPrivate>} />
+
+          <Route path="/cart" element={<CartPage/>} />
+          <Route path="/cart/checkout" element={<Checkout/>} />
+          
+          <Route path="/:productId/comments/:commentId/edit" element={<EditComment/>} />
+
           {/* Change to a nice 404 page */}
           <Route path="*" element={<h1>404: Sorry, this route does not exist.</h1>} />
+
         </Routes>
         <Footer />
       </CartProviderWrapper>
