@@ -34,8 +34,9 @@ function AddComment(props) {
         // Reset the state
         setComment("");
         setRating(0);
-
+       
         props.refreshComments();
+        
       })
       .catch((err) => {
         console.log("Error while posting comment", err);

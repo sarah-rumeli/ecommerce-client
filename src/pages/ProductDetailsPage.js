@@ -6,6 +6,7 @@ import { AuthContext } from "../context/auth.context";
 import { CartContext } from "../context/cart.context";
 import AddComment from "../components/AddComment";
 import EditComment from "../components/EditComment";
+import StarRating from "../components/StarRating";
 
 const API_URL = "http://localhost:5005";
 
@@ -17,6 +18,7 @@ function ProductDetailsPage(props) {
   const [product, setProduct] = useState(null);
   const [comments, setComments] = useState([]);
   const [rating, setRating] = useState(0);
+  const [productRating, setProductRating] = useState(0);
 
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ function ProductDetailsPage(props) {
         const oneProduct = response.data;
 
         setProduct(oneProduct);
+        setProductRating(oneProduct.rating);
       })
       .catch((error) => console.log(error));
   };
@@ -39,6 +42,7 @@ function ProductDetailsPage(props) {
   }, []);
 
   const getAllComments = () => {
+   
     const storedToken = localStorage.getItem("authToken");
     axios
       .get(
@@ -48,6 +52,15 @@ function ProductDetailsPage(props) {
       .then((response) => {
         // variable that filters array
             setComments(response.data);
+            if(response.data.length!==0){
+
+            
+            const newRating= Math.floor((response.data.reduce(
+              (accumulator, element) => accumulator + element.rating,
+              0
+            ))/response.data.length);
+            setProductRating(newRating);
+            }
       })
       .catch((error) => console.log(error));
   };
@@ -64,8 +77,7 @@ function ProductDetailsPage(props) {
     }
 
     const requestBody = { user: user._id, product };
-   
-    
+       
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
@@ -104,9 +116,10 @@ function ProductDetailsPage(props) {
         setComments((prevComments) =>
           prevComments.filter((comment) => comment._id !== commentId)
         );
+       
       })
       .catch((error) =>
-        console.log("There has been error deleting this Product: ", error)
+        console.log("There has been error deleting this Comment: ", error)
       );
   };
   return (
@@ -121,6 +134,11 @@ function ProductDetailsPage(props) {
               <div className="col-md-4 p-5">
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
+                  <span className="col-6 text-end">
+                            {[...Array(productRating)].map((star) => {
+                              return <span className="star">&#9733;</span>;
+                            })}
+                          </span>
                   <p className="card-text"><small className="text-muted">{product.category}</small></p>
                   <p className="card-text">{product.description}</p>
                   
@@ -191,7 +209,7 @@ function ProductDetailsPage(props) {
               Back to products
             </button>
           </Link>
-          <AddComment productId={productId} refreshComments={getAllComments} />
+          <AddComment productId={productId} refreshComments={getAllComments} refreshProduct={getProduct} />
          
           {comments.map((comment) => {
             return (
@@ -204,11 +222,13 @@ function ProductDetailsPage(props) {
                           <span className="col-6 text-start fw-bold">
                             {comment.userId.name}
                           </span>
+                           {/* new div added for the stars*/}
                           <span className="col-6 text-end">
                             {[...Array(comment.rating)].map((star) => {
                               return <span className="star">&#9733;</span>;
                             })}
                           </span>
+                           {/* new div added for the stars*/}
                         </div>
                       </div>
                       <div className="card-body">

@@ -69,6 +69,13 @@ function ProductListPage() {
                 )}
                 <div className="card-body">
                   <h4 className="text-success lh-base text-truncate">{product.name}</h4>
+                  {/* new div added for the stars*/}
+                  <span className="col-6 text-end">
+                            {[...Array(product.rating)].map((star) => {
+                              return <span className="star">&#9733;</span>;
+                            })}
+                          </span>
+                           {/* new div added for the stars*/}
                   <p className="card-text text-truncate">
                     {product.description}
                   </p>
