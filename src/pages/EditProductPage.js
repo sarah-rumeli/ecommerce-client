@@ -137,6 +137,7 @@ function EditProductPage(props) {
           onChange={(e) => setCategory(e.target.value)}
         >
         <option value="">Select a category</option>
+          <option value="Cleaning">Cleaning</option>
           <option value="Organic Products">Organic Products</option>
           <option value="Reclaimed Textiles">Reclaimed Textiles</option>
           <option value="Refurbished Electronics">Refurbished Electronics</option>
