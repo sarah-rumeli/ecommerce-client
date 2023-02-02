@@ -22,6 +22,25 @@ a:visited { text-decoration: none; }
 a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
 
+.header {
+  background: #ffa407;
+  transform: skew(20deg); /* SKEW */
+  color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 5px;
+  margin-top: -1em;
+}
+
+h3.header {
+  display: block; /* block or inline-block is needed */
+  transform: skew(-15deg); /* UNSKEW */
+  color: #fff;
+  line-height: 0.9em;
+  padding: 0.7rem 0 0.7rem 0;
+  text-shadow: 0 2px 5px #464646;
+
+}
+
 /* Homepage Carousel */
 .carousel-item {
   position: relative;
@@ -49,7 +68,7 @@ a:active { text-decoration: none; }
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, #273227cc, #00b53666,  #00ff2277);
+  background: linear-gradient(to top, #ffffff1f, #ffffff1f);
   color: white;
   display: flex;
   align-items: center;
@@ -60,6 +79,33 @@ a:active { text-decoration: none; }
 
 .carousel-item:hover .overlay {
   opacity: 1;
+}
+
+.cart-header {
+  background: #ffa407;
+  transform: skew(20deg); /* SKEW */
+  color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 5px;
+  margin-top: -1em;
+}
+
+h1.cart-header {
+  display: block; /* block or inline-block is needed */
+  transform: skew(-15deg); /* UNSKEW */
+  color: #fff;
+  line-height: 0.9em;
+  padding: 0.7rem 0 0.7rem 0;
+  text-shadow: 0 2px 5px #464646;
+  width: 80%;
+}
+
+.bg-control-prev {
+  background: linear-gradient(to right, #000000a2, #ffffff00);
+}
+
+.bg-control-next {
+  background: linear-gradient(to left, #000000a2, #ffffff00);
 }
 
 /* BG gradient for Layout */
@@ -101,8 +147,106 @@ a:active { text-decoration: none; }
   overflow: hidden;
 }
 */
+.pop-card.image-box {
+  border-radius: 5px;
+  margin: 10px;
+  padding: 0 0 0 0;
+  z-index: 0;
+}
+.pop-card.image-box {
+  padding: 0 0 0 0;
+  overflow: hidden;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.50);
+  border-radius: 5px;
+}
+
+.pop-card {
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.40);
+  height: fit-content;
+}
+
+.pop-card:hover {
+  box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.pop-card.image-box img {
+  opacity: 1;
+  -webkit-transition: all .9s ease; 
+  -moz-transition: all .9s ease; 
+  -o-transition: all .9s ease;
+  -ms-transition: all .9s ease;
+}
+
+.pop-card:hover.image-box img {
+  opacity: 0.7;
+  -webkit-transform:scale(1.15);
+  -moz-transform:scale(1.15);
+  -ms-transform:scale(1.15);
+  -o-transform:scale(1.15);
+  transform:scale(1.15);
+}
+
+.pop-text-heading {
+  width: 18rem;
+  background: #ffa407;
+  -ms-transform: skewX(15deg); /* IE 9 */
+  -webkit-transform: skewX(15deg); /* Safari */
+  transform: skewX(15deg);
+  color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 5px;
+  margin-left: -0.3rem;
+  z-index: 1;
+}
+
+h3.pop-text-heading {
+  display: block; /* block or inline-block is needed */
+  -ms-transform: skewX(-20deg); /* IE 9 */
+  -webkit-transform: skewX(-20deg); /* Safari */
+  transform: skewX(-20deg);
+  color: #fff;
+  text-shadow: 0 2px 5px #464646;
+}
+
+.pop-card h3.pop-text-heading {
+  display: none;
+  position: absolute;
+  margin-top: -0.5rem !important;
+}
+
+.pop-card:hover .pop-text-heading {
+  display: block;
+}
+
 .card-products {
   width: 18rem !important;
+}
+
+.product-heading {
+  background: #ffa407;
+  transform: skew(20deg); /* SKEW */
+  color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 5px;
+  margin-top: -1em;
+}
+
+h1.product-heading {
+  display: block; /* block or inline-block is needed */
+  transform: skew(-10deg); /* UNSKEW */
+  color: #fff;
+  line-height: 0.9em;
+  text-shadow: 0 2px 5px #464646;
 }
 
 .container-cards-add-product {

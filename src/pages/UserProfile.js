@@ -28,92 +28,31 @@ function UserProfile() {
           <span class="visually-hidden">Loading...</span>
         </div>
       ) : (
-        <div className="profileDetails">
-          <section
-            className="vh-90"
-            style={{ backgroundColor: "beige", marginBottom: "0px" }}
-          >
-            <div className="container py-5 h-100">
-              <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col col-lg-6 mb-4 mb-lg-0">
-                  <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
-                    <div className="row g-0">
-                      <div
-                        className="col-md-4 gradient-custom text-center text-dark"
-                        style={{
-                          borderTop: ".5rem",
-                          borderLeft: ".5rem",
-                          borderRadius: ".5rem",
-                        }}
-                      >
-                        <img
-                          src="https://res.cloudinary.com/dq4j6xfee/image/upload/v1675019968/ecommerce/ywin8hopopdpju0askr3.jpg"
-                          alt="Avatar"
-                          class="img-fluid my-5"
-                          style={{ width: "80px" }}
-                        />
-                        <h4> {user.name}</h4>
+        <div className="container-fluid">
+          <div className="row justify-content-center">
+            <h3 className="header mt-4 w-50">Your Profile</h3>
+            <div className="text-dark m-3 p-3 card border-success rounded-3 w-75">
+              <h4>{user.name}</h4>
+              <h6>Email</h6>
+              <p className="text-muted">{user.email}</p>
+              <h6>Address:</h6>
+              <p className="text-muted">{user.address}</p>
 
-                        <i className="far fa-edit mb-5"></i>
-                      </div>
-                      <div className="col-md-8">
-                        <div className="card-body p-4">
-                          <h6>Information</h6>
-                          <hr className="mt-0 mb-4" />
-                          <div className="row pt-1">
-                            <div className="col-6 mb-3">
-                              <h6>Email</h6>
-                              <p className="text-muted">{user.email}</p>
-                            </div>
-
-                            <div className="col-6 mb-3">
-                              <h6>Address:</h6>
-                              <p className="text-muted">{user.address}</p>
-                            </div>
-                          </div>
-
-                          {/* <h6>Status </h6>
-                          <hr className="mt-0 mb-4" />
-                          <div className="row pt-1">
-                            <div
-                              className="col-6 mb-3"
-                              style={{ textAlign: "center", marginLeft: "6vw" }}
-                            >
-                              <h6 style={{ textAlign: "center" }}>
-                                {" "}
-                                Admin:
-                                {user.isAdmin === false ? (
-                                  <h5 className="text-muted">false</h5>
-                                ) : (
-                                  <h5 className="text-muted">true</h5>
-                                )}
-                              </h6> */}
-                            {/* </div>
-                          </div> */}
-
-                          <div className="d-flex justify-content-center">
-                            <Link to={`/profile/edit/${user._id}`}>
-                              <button
-                                className="btn btn-outline-dark rounded"
-                                style={{ marginRight: "1vw" }}
-                              >
-                                Edit Profile
-                              </button>
-                            </Link>
-                            <Link to="">
-                              <button className="btn btn-outline-danger rounded" onClick={handleDelete}>
-                                Delete Profile
-                              </button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="d-flex justify-content-center">
+                <Link to={`/profile/edit/${user._id}`}>
+                  <button className="btn btn-outline-success rounded me-1">
+                    Edit Profile
+                  </button>
+                </Link>
+                <Link to="">
+                  <button className="btn btn-outline-danger rounded" onClick={handleDelete}>
+                    Delete Profile
+                  </button>
+                </Link>
               </div>
+
             </div>
-          </section>
+          </div>
         </div>
       )}
     </>

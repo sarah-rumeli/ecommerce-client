@@ -26,20 +26,20 @@ function HomePage() {
                   
                   <img src={product.img} className="d-block w-100 ratio border-3" alt={product.name} />
                   
-                  <Link to={`/products/${product._id}`}>
-                    <div className="overlay text-truncate">
-                      <h2>{product.name}</h2>
-                    </div>
+                  <Link to={`/products/${product._id}`} className="overlay">
+                    <h1 className="cart-header text-truncate">
+                      {product.name}
+                    </h1>
                   </Link>
                 </div>
               ))}
               {/* End loop here */}
             </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="prev">
+            <button className="carousel-control-prev bg-control-prev" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="prev">
               <span className="carousel-control-prev-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Previous</span>
             </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="next">
+            <button className="carousel-control-next bg-control-next" type="button" data-bs-target="#ecomartsCarousel" data-bs-slide="next">
               <span className="carousel-control-next-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Next</span>
             </button>
