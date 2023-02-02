@@ -3,10 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-
 import AddProduct from "../components/AddProduct";
-
-//const API_URL = "http://localhost:5005";
 
 function ProductListPage() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -57,35 +54,22 @@ function ProductListPage() {
         <div className="col-md-12 col-lg-12 col-xl-9 d-flex flex-wrap justify-content-center">
           {filteredProducts.map((product) => {
             return (
-              <div className="card-products border-success mt-3 mx-2 p-0 shadow" key={product._id}>
+              <Link to={`/products/${product._id}`} className="pop-card image-box">
+              <div className="card-products border-success mt-0 mx-0 p-0" key={product._id}>
+                <h3 className="pop-text-heading fs-5 lh-base text-truncate">{product.name}</h3>
+                
                 {product.img ? (
-                  <Link to={`/products/${product._id}`}>
-                    <img src={product.img} className="card-img-top card-img-top-bg-gradient m-0 ml-n1 p-n1" />
-                  </Link>
+                    <img src={product.img} className="card-img-top card-img-top-bg-gradient m-0" />
                 ) : (
-                  <Link to={`/products/${product._id}`}>
                     <img src="https://res.cloudinary.com/dsw3axyzs/image/upload/v1673616382/lifehack-project/alzqyx6cfvtlys1lxegz.jpg" className="card-img-top ml-0 p-0" />
-                  </Link>
                 )}
-                <div className="card-body">
-                  <h4 className="text-success lh-base text-truncate">{product.name}</h4>
-                  {/* new div added for the stars*/}
-                  <span className="col-6 text-end">
-                            {[...Array(product.rating)].map((star) => {
-                              return <span className="star">&#9733;</span>;
-                            })}
-                          </span>
-                           {/* new div added for the stars*/}
-                  <p className="card-text text-truncate">
-                    {product.description}
-                  </p>
-                </div>
-                <div className="card-footer-light bg-transparent border-success text-end">
-                  <Link to={`/products/${product._id}`}>
-                    <button className="btn btn-outline-success mb-3 me-3">View &rArr;</button>
-                  </Link>
+                <div className="pop-text-heading-no-bg">
+                  {[...Array(product.rating)].map((star) => {
+                    return <span className="stars-sml">&#9733;</span>;
+                  })}
                 </div>
               </div>
+              </Link>
             );
           })}
         </div>

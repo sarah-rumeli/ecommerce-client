@@ -8,7 +8,6 @@ import Checkout from "./Checkout";
 const API_URL = "http://localhost:5005";
 
 function CartPage() {
-  console.log("******** CartPage.js clg**********");
   const { isLoading, isLoggedIn } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
@@ -104,9 +103,10 @@ function CartPage() {
   return (
     <>
       {!isLoading && (
-        <div className="container-fluid mt-3 mb-5">
+        <div className="container-fluid mt-3 mb-5 text-center">
           <div className="row justify-content-center">
-            <h1>Your Cart</h1>
+            <h3 className="header mt-4 mb-5 w-50">Your Cart</h3>
+            <div className="clearfix"></div>
             {products.length > 0 ? (
               <>
                 <div className="col-md-6">
@@ -153,7 +153,7 @@ function CartPage() {
                 <div className="col-md-4 d-flex align-items-center justify-content-center text-white rounded-3">
                   <div className="w-100 box-bg-gradient">
                     <h3>Total € {totalPrice}</h3>
-                    <button className="btn btn-success shadow mb-3" type="submit" onClick={handleCheckout}>
+                    <button className="btn btn-outline-success bg-white text-dark shadow mb-3" type="submit" onClick={handleCheckout}>
                       Checkout
                     </button>
                   </div>
@@ -162,14 +162,18 @@ function CartPage() {
             ) : (
               <>
                 {/* CART empty message... */}
-                <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-white m-3 p-5 bg-dark bg-gradient rounded-3">
+                <div className="col-10 col-lg-10 col-md-10 col-sm-10 text-dark m-3 p-5 card border-success text-center rounded-3">
                   Oops, it looks like your cart is empty...
+                  <br />
                   {/* Not Logged In message... */}
                   {!isLoggedIn && (
-                    <p>You'll need to <Link to="/login" className="badge rounded-pill bg-success text-white">Login</Link> or <Link to="/signup" className="badge rounded-pill bg-warning text-dark">Sign Up</Link> to buy products</p>
+                    <p className="mt-3">You'll need to <Link to="/login" className="badge rounded-pill bg-success text-white">Login</Link> or <Link to="/signup" className="badge rounded-pill bg-warning text-dark">Sign Up</Link> to buy products</p>
                   )}
-                  <p></p>
-                  <Link className="btn bg-success bg-gradient text-light" to='../products'>Get Shopping!</Link>
+                  <Link to='../products'>
+                  <button className="btn btn-success rounded text-light mt-3 px-5">
+                  Get Shopping!
+                  </button>
+                  </Link>
                 </div>
               </>
             )}

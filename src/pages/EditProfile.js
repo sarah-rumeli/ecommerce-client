@@ -4,7 +4,6 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 //const API_URL = "http://localhost:5005";
 
-
 function EditProfile(props) {
   const {
     isLoggedIn,
@@ -21,11 +20,9 @@ function EditProfile(props) {
   const { profileId } = useParams();
   const navigate = useNavigate();
 
- 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/profile/${profileId}`
-        )
+      .get(`${process.env.REACT_APP_API_URL}/auth/profile/${profileId}`)
       .then((response) => {
         const oneProfile = response.data;
         setName(oneProfile.name);
@@ -64,46 +61,60 @@ function EditProfile(props) {
   };
 
   return (
-    <div style ={{width:"50%",marginLeft:"25vw"}}>
-      <h3>Edit Profile</h3>
+    <div className="container-fluid">
+      <div className="row justify-content-center">
+        <h3 className="header mt-4 mb-5 w-50">Edit your Profile</h3>
+        <div className="text-dark m-3 p-3 card border-success rounded-3 w-75">
 
-      <form onSubmit={handleFormSubmit}>
-      <div className="form-outline mb-4">
-      <label className="form-label" for="form4Example1">Name:</label>
-        <input
-          type="text"
-          id="form4Example1" className="form-control"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-         
- </div>
+              <form onSubmit={handleFormSubmit}>
+                <div className="form-outline mb-4">
+                  <label className="form-label" for="form4Example1">
+                    Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="form4Example1"
+                    className="form-control"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
 
- <div className="form-outline mb-4">
- <label classname="form-label" for="form4Example2">Email:</label>
-        <input
-          type="email"
-          id="form4Example2" className="form-control"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-</div>
- <div className="form-outline mb-4">
- <label className="form-label" for="form4Example3">Address:</label>
-        <textarea
-          name="address"
-          className="form-control" id="form4Example3" rows="4"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        
+                <div className="form-outline mb-4">
+                  <label classname="form-label" for="form4Example2">
+                    Email:
+                  </label>
+                  <input
+                    type="email"
+                    id="form4Example2"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="form-outline mb-4">
+                  <label className="form-label" for="form4Example3">
+                    Address:
+                  </label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="form4Example3"
+                    rows="4"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className="btn btn-outline-success btn-block mb-4">
+                  Update Profile
+                </button>
+              </form>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            
         </div>
-        <button type="submit" className="btn btn-primary btn-block mb-4">Update Profile</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
     </div>
   );
 }

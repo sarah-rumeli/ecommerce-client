@@ -83,7 +83,7 @@ function AddProduct(props) {
     <div className="text-white">
       <div className="text-white">
         <div className="text-white m-3 p-5 bg-dark box-bg-gradient rounded-3">
-          <h3>Add a Product</h3>
+          <h3 className="header">Add a Product</h3>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label className="form-label">Name *:</label>
