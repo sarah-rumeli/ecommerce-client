@@ -35,19 +35,24 @@ function CartProviderWrapper({ children }) {
     } else {
       const { name, _id, price, quantity = 1, img } = item.product;
       const newProduct = { name, _id, price, quantity, img };
-      const { products } = cartItems[0];
-      const [existingCart] = cartItems;
-      const existingProduct = products.find((product) => product._id === _id);
-      if (existingProduct) {
-        existingProduct.quantity += 1; // Product exists, increment quantity...
-        setCartItems([...cartItems]);
+      if (cartItems.length === 0) {
+        console.log('There are no products in this cart...');
+        setCartItems([{ products: [newProduct] }]);
       } else {
-        setCartItems([
-          {
-            ...existingCart,
-            products: [...existingCart.products, newProduct],
-          },
-        ]);
+        if (existingProduct) {
+          const { products } = cartItems[0];
+          const [existingCart] = cartItems;
+          const existingProduct = products.find((product) => product._id === _id);
+          existingProduct.quantity += 1; // Product exists, increment quantity...
+          setCartItems([...cartItems]);
+        } else {
+            setCartItems([
+              {
+                ...existingCart,
+                products: [...existingCart.products, newProduct],
+              },
+            ]);
+        }
       }
     }
   }
