@@ -69,7 +69,7 @@ function DisplayOrderPage() {
 return(
   <div>
     <h2>You haven't placed an order with us yet! Go Shopping!</h2>
-    <Link to="/products">To Products</Link>
+    <Link to="/products"><button className="btn bg-success bg-gradient text-light" style ={{marginBottom:"10vw",marginTop:"2vw"}}>To Products</button></Link>
 
   </div>
 )
@@ -79,7 +79,7 @@ return(
     <>
     {!isLoading &&
     <div className="container-fluid text-center justify-content-center">
-    <div className="display-4">Orders</div>
+    <h3 className="header mt-4 w-20" style={{marginLeft:"40vw", marginBottom: "2vw",width:"20%"}}>Orders</h3>
 <div className="alert alert-success" role="alert">{message && <p className="message">{message}</p>}</div>
     
     {orders.length===0 && renderDetails()}
