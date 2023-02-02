@@ -6,17 +6,14 @@ import { AuthContext } from "../context/auth.context";
 import { CartContext } from "../context/cart.context";
 import AddComment from "../components/AddComment";
 import EditComment from "../components/EditComment";
-
-const API_URL = "http://localhost:5005";
-
-console.log("*********** ProductDetailsPage *****************");
+import StarRating from "../components/StarRating";
 
 function ProductDetailsPage(props) {
-  const { isLoggedIn, isLoading, user, logOutUser, isAdmin } =
-    useContext(AuthContext);
+  const { isLoggedIn, isLoading, user, logOutUser, isAdmin } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [comments, setComments] = useState([]);
   const [rating, setRating] = useState(0);
+  const [productRating, setProductRating] = useState(0);
 
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -30,6 +27,7 @@ function ProductDetailsPage(props) {
         const oneProduct = response.data;
 
         setProduct(oneProduct);
+        setProductRating(oneProduct.rating);
       })
       .catch((error) => console.log(error));
   };
@@ -39,6 +37,7 @@ function ProductDetailsPage(props) {
   }, []);
 
   const getAllComments = () => {
+   
     const storedToken = localStorage.getItem("authToken");
     axios
       .get(
@@ -47,9 +46,16 @@ function ProductDetailsPage(props) {
       )
       .then((response) => {
         // variable that filters array
+            setComments(response.data);
+            if(response.data.length!==0){
 
-        console.log("response for hsky", response.data);
-        setComments(response.data);
+            
+            const newRating= Math.floor((response.data.reduce(
+              (accumulator, element) => accumulator + element.rating,
+              0
+            ))/response.data.length);
+            setProductRating(newRating);
+            }
       })
       .catch((error) => console.log(error));
   };
@@ -64,16 +70,16 @@ function ProductDetailsPage(props) {
     if (!user) {
       return;
     }
+
     const requestBody = { user: user._id, product };
-    //console.log("requestBody: ", requestBody);
-    //console.log("product: ", product);
+       
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
       .then((response) => {
-        //console.log("response: ", response);
+      
         // update the cartItems state in the component
         const { cart } = response.data;
-        //console.log("PRODUCT DETAILS: {cart}", cart);
+       
         addToCart(requestBody);
         // Once the request is resolved successfully and the item
         // has been added to the cart we navigate back here
@@ -93,6 +99,7 @@ function ProductDetailsPage(props) {
     };
     return date.toLocaleString("en-UK", options);
   };
+
   const handleDeleteComment = (commentId) => {
     const storedToken = localStorage.getItem("authToken");
 
@@ -105,11 +112,13 @@ function ProductDetailsPage(props) {
         setComments((prevComments) =>
           prevComments.filter((comment) => comment._id !== commentId)
         );
+       
       })
       .catch((error) =>
-        console.log("There has been error deleting this Product: ", error)
+        console.log("There has been error deleting this Comment: ", error)
       );
   };
+
   return (
     <>
       <div className="container-fluid">
@@ -121,7 +130,12 @@ function ProductDetailsPage(props) {
               </div>
               <div className="col-md-4 p-5">
                 <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
+                  <h1 className="product-heading">{product.name}</h1>
+                  <span className="col-6 text-end">
+                    {[...Array(productRating)].map((star) => {
+                      return <span className="star">&#9733;</span>;
+                    })}
+                  </span>
                   <p className="card-text"><small className="text-muted">{product.category}</small></p>
                   <p className="card-text">{product.description}</p>
                   
@@ -217,32 +231,23 @@ function ProductDetailsPage(props) {
                       </div>
 
                       <div className="card-footer text-muted d-flex justify-content-between">
-                        {isLoggedIn &&(
+                        {isLoggedIn && (
                           <>
                           {user._id === comment.userId._id &&
                           (
                             <div className="d-flex justify-content-between">
                             <Link to={`/${productId}/comments/${comment._id}/edit`}>
-                              <button
-                                className="btn btn-outline-dark rounded"
-                                style={{ marginRight: "1vw" }}
-                              >
+                              <button className="btn btn-outline-dark rounded ms-1">
                                 Edit
                               </button>
                             </Link>
-                            <button
-                              className="btn btn-outline-danger rounded"
-                              onClick={() => handleDeleteComment(comment._id)}
-                            >
+                            <button className="btn btn-outline-danger rounded" onClick={() => handleDeleteComment(comment._id)}>
                               Delete
                             </button>
                             </div>
-                            )
-                           
-                            }
-                            </>
-                          )
-                        }
+                          )}
+                          </>
+                        )}
                         <small>{formatDate(comment.createdAt)}</small>
                       </div>
                     </div>
