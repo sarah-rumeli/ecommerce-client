@@ -28,6 +28,7 @@ function CartProviderWrapper({ children }) {
     }
   }, [user]);
 
+  // add an item to user cart
   function addToCart(item) {
     if (!item) {
       // item not passed, will return 'undefined'
@@ -35,23 +36,31 @@ function CartProviderWrapper({ children }) {
     } else {
       const { name, _id, price, quantity = 1, img } = item.product;
       const newProduct = { name, _id, price, quantity, img };
-      const { products } = cartItems[0];
-      const [existingCart] = cartItems;
-      const existingProduct = products.find((product) => product._id === _id);
-      if (existingProduct) {
-        existingProduct.quantity += 1; // Product exists, increment quantity...
-        setCartItems([...cartItems]);
+      // check if user cart exists, if not add this 1st product
+      if (cartItems.length === 0) {
+        setCartItems([{ products: [newProduct] }]);
       } else {
-        setCartItems([
-          {
-            ...existingCart,
-            products: [...existingCart.products, newProduct],
-          },
-        ]);
+        // user cart exists, check if this product is in the cart
+        // if not, add it, otherwise increment existing product quantity
+        const { products } = cartItems[0];
+        const [existingCart] = cartItems;
+        const existingProduct = products.find((product) => product._id === _id);
+        if (existingProduct) {
+          existingProduct.quantity += 1; // Product exists, increment quantity...
+          setCartItems([...cartItems]);
+        } else {
+            setCartItems([
+              {
+                ...existingCart,
+                products: [...existingCart.products, newProduct],
+              },
+            ]);
+        }
       }
     }
   }
 
+  // when user clicks 'remove' from cart, only remove that product
   function removeFromCart(productId) {
     const { products } = cartItems[0];
     if (!productId) {
@@ -64,8 +73,13 @@ function CartProviderWrapper({ children }) {
     }
   }
 
+  // remove all items from the cart when user clicks on 'checkout'
+  function emptyCart() {
+    setCartItems([{ products: [] }]);
+  }
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, emptyCart }}>
       {children}
     </CartContext.Provider>
   );
