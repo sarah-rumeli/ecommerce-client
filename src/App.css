@@ -50,6 +50,10 @@ h3.header {
   width: 50vw;
 }
 
+.ecomarts-logo {
+  width: 3rem;
+}
+
 /* Homepage Carousel */
 .carousel-item {
   position: relative;
