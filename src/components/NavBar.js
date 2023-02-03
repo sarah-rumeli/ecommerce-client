@@ -23,7 +23,7 @@ function Navbar() {
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light alert-success">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img src="../../public/ecomarts_sml_logo.png" alt="ecomarts" className="d-inline-block align-text-top" />
+          <img src="../../public/ecomarts_sml_logo.png" alt="" className="d-inline-block align-text-top" />
           ecomarts
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
