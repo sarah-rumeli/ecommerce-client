@@ -79,7 +79,8 @@ return(
     <>
     {!isLoading &&
     <div className="container-fluid text-center justify-content-center">
-    <h3 className="header mt-4 w-20" style={{marginLeft:"40vw", marginBottom: "2vw",width:"20%"}}>Orders</h3>
+    <div className="row justify-content-center">
+    <h3 className="header mt-5 mb-5 w-50">Orders</h3>
 <div className="alert alert-success" role="alert">{message && <p className="message">{message}</p>}</div>
     
     {orders.length===0 && renderDetails()}
@@ -157,7 +158,7 @@ return(
       })}
     </div>
     </div>
-    
+    </div>
     }
     </>
   );
