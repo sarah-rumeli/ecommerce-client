@@ -37,10 +37,10 @@ function ProductListPage() {
         <div className="col-12 mb-2">
           <div className="input-group row justify-content-center">
             <div className="form-outline mt-2" style ={{width:"25%", display:"flex"}}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16" style={{margin:"1vw"}}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16" style={{marginTop:"2.5vw",marginRight:"1vw"}}>
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
               </svg>
-              <input type="search" id="form1" className="form-control rounded" placeholder = {"Search"} value={searchTerm} onChange={handleSearchTermChange} />
+              <input type="search" id="form1" className="form-control rounded" style={{marginTop:"2vw"}} placeholder = {"Search"} value={searchTerm} onChange={handleSearchTermChange} />
             </div>
           </div>
         </div>
