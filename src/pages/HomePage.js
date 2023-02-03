@@ -48,7 +48,7 @@ function HomePage() {
         <div className="container-fluid my-5">
           <div className="row mx-5 px-5 d-flex justify-content-center">
             <div className="col-10 border border-success rounded-3 pt-4 px-4 text-start shadow">
-              <p className="fs-5">EcoMarts is an e-commerce platform that focuses on offering eco-friendly and sustainable products.</p>
+              <p className="fs-5">ecoMarts is an e-commerce platform that focuses on offering eco-friendly and sustainable products.</p>
               
               <p className="fs-5">Our mission is to make it easier for consumers to make responsible purchasing decisions, without sacrificing quality or style. We believe that every purchase has the power to make a positive impact on the planet, and we are committed to curating a selection of products that align with this mission.</p>
               
