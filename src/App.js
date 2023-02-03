@@ -29,6 +29,7 @@ import { CartProviderWrapper } from "./context/cart.context";
 import Checkout from "./components/Checkout";
 import Footer from "./components/Footer";
 import EditComment from "./components/EditComment";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
           <Route path="/:productId/comments/:commentId/edit" element={<EditComment/>} />
 
           {/* Change to a nice 404 page */}
-          <Route path="*" element={<h1>404: Sorry, this route does not exist.</h1>} />
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
         <Footer />
