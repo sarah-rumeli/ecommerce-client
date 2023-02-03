@@ -5,7 +5,7 @@ import { CartContext } from "../context/cart.context";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, emptyCart } = useContext(CartContext);
   const { productsFromContext} = useContext(CartContext);
   let totalQuantity = 0;
   if (cartItems && cartItems.length >= 1) {
@@ -13,7 +13,11 @@ function Navbar() {
     //console.log('products: ', products);
     totalQuantity = products.reduce((acc, product) => acc + product.quantity, 0);
   }
-  //console.log("totalQuantity: ", totalQuantity);
+  
+  const handleLogout = () => {
+    logOutUser();
+    emptyCart();
+  };
 
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light alert-success">
@@ -60,7 +64,7 @@ function Navbar() {
                   <span className="nav-link">{user && "Hello, " + user.name}</span>
                 </li>
                 <li className="nav-item">
-                  <button className="nav-link btn btn-danger bg-gradient text-white" onClick={logOutUser}>Logout</button>
+                  <button className="nav-link btn btn-danger bg-gradient text-white" onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
               </>
