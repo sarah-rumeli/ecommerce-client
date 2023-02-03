@@ -1,70 +1,150 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ecoMarts
 
-## Available Scripts
+ecoMarts is an e-commerce platform that focuses on offering eco-friendly and sustainable products.
+![Logo](https://res.cloudinary.com/dq4j6xfee/image/upload/v1675413541/ecommerce/gfshw1opf7kvgkc8cjs7.png)
 
-In the project directory, you can run:
+## About this app:
 
-### `npm start`
+Our mission is to make it easier for consumers to make responsible purchasing decisions, without sacrificing quality or style. We believe that every purchase has the power to make a positive impact on the planet, and we are committed to curating a selection of products that align with this mission.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Created By :
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project was a collaboration of two girls who share a similar passion for coding.
+We did an awesome team-work and put in our best efforts and hard work into this project.
 
-### `npm test`
+We are :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Rumeli Paul.
+- Sarah Kandlin.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ecoMarts Features:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- A platform which offers a wide range of ecofriendly and sustainable products.
+ - Products : Users can buy and sell products under several categories.
+- Cart : You can add /remove products to our cart and checkout.
+- Orders : View order summary and provision to cancel them.
+- Comments: Users can add comments to products.
+- Ratings:  Users can give star ratings to products.
+- Search bar.
+- Fully responsive with a mobile first approach.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##  ecoMarts Functionalities :
 
-### `npm run eject`
+ecoMarts is a working full stack app made using Mongodb, Express,Node.js and React.
+ We have implemented 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- REST API in the backend using Express.
+- Front end with React with multiple views.
+ - Sign up and Login For Users.
+ - User can Create, Edit and Delete his/her profile.
+- CRUD on multiple models like Product,Order, Comment, User.
+- A fully functional Cart with dynamic updation of cart on adding or removing products.
+- Protected Routes for User profile, Editing /Adding product, Orders and Comments.
+- Validations and Authentication on Client and Server side.
+- Conditional Rendering of Views.
+- Admin rights on Editing, deleting and viewing orders or comments or product.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ To run this project , you will need to the following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ ## Environment Variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+ `PORT` (for localhost)
 
-## Learn More
+ `REACT_APP_API_URL`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ ## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### To Run this on Your LocalHost :
+- Install the dependencies.
 
-### Code Splitting
+```bash
+  npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+```bash
+  npm install react-router-dom
 
-### Analyzing the Bundle Size
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+- To run this Project :
+```bash
+  npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+## ScreenShots :
 
-### Advanced Configuration
+- Homepage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![App Screenshot](../public/homepage.PNG)
 
-### Deployment
+- Homepage after Logging in
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![App Screenshot](../public/after%20login%20homepage.PNG)
 
-### `npm run build` fails to minify
+- Signup page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![App Screenshot](../public/signup%20page.PNG)
+
+- Log in Validations
+
+![App Screenshot](../public/validation%20login.PNG)
+
+- Products list page
+
+![App Screenshot](../public/products%20list%20page.PNG)
+
+- Product details page
+
+![App Screenshot](../public/products%20list%20page.PNG)
+
+- Comments section
+
+![App Screenshot](../public/comment.PNG)
+
+- Cart page
+
+![App Screenshot](../public/cart%20page.PNG)
+
+- Order page for a user
+
+![App Screenshot](../public/order%20page.PNG)
+
+- Order page for admin 
+
+![App Screenshot](../public/admin%20view%20of%20orders.PNG)
+
+- Direct buying of products
+
+![App Screenshot](../public/direct%20buy.PNG)
+
+- product view for users who are not logged in
+
+![App Screenshot](../public/productview_nonloggedin.PNG)
+
+
+
+## Demo
+
+Here is a link of our working app on Netlify:
+https://ecomarts.netlify.app/
+
+## 🔗 Links to Our Repos
+[https://github.com/sarah-rumeli/ecommerce-client]
+
+[https://github.com/sarah-rumeli/ecommerce-server]
+
+# Thank You!
+
+
+
+
+
+
+
+
+
+
+
