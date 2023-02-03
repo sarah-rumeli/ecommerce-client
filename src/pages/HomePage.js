@@ -46,7 +46,7 @@ function HomePage() {
           </div>
         </div>
         <div className="container-fluid my-5">
-          <div className="row mx-5 px-5 d-flex justify-content-center">
+          <div className="col-12 col-sm-6 col-md-12 col-lg-12 d-flex justify-content-center">
             <div className="col-10 border border-success rounded-3 pt-4 px-4 text-start shadow">
               <p className="fs-5">ecoMarts is an e-commerce platform that focuses on offering eco-friendly and sustainable products.</p>
               
